@@ -2,6 +2,9 @@
 username = Nikos Kokolakis <kokolakisnikos@gmail.com>
 editor = vim
 
+[extensions]
+progress =
+
 [merge-patterns]
 ** = filemerge
 
