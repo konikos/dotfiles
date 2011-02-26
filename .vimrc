@@ -29,6 +29,7 @@ if has("autocmd")
 	" Override defaults
 	autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
 	autocmd FileType c setlocal ts=4 sts=4 sw=4 noexpandtab
+	autocmd FileType php setlocal ts=4 sts=4 sw=4 noexpandtab
 	autocmd FileType make setlocal ts=4 sts=4 sw=4 noexpandtab
 
 endif
@@ -43,8 +44,8 @@ endif
 "set mouse=-a		" Enable mouse usage (all modes)
 
 " Highlight lines longer than 80 characters
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
+" highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+" match OverLength /\%81v.\+/
 
 inoremap <F1> <ESC>
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
