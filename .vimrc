@@ -12,8 +12,8 @@ if has("syntax")
 	syntax on
 endif
 
-colorscheme desert
-set background=dark
+" colorscheme desert
+"set background=dark
 
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
