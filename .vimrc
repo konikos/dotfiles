@@ -26,6 +26,13 @@ endif
 if has("autocmd")
 	filetype plugin indent on
 
+	" vala syntax support
+	autocmd BufRead *.vala set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
+	autocmd BufRead *.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
+	au BufRead,BufNewFile *.vala            setfiletype vala
+	au BufRead,BufNewFile *.vapi            setfiletype vala
+
+
 	" Override defaults
 	autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
 	autocmd FileType c setlocal ts=4 sts=4 sw=4 noexpandtab
