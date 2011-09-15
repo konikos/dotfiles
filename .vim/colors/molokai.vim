@@ -5,6 +5,7 @@
 " Note: Based on the monokai theme for textmate
 " by Wimer Hazenberg and its darker variant 
 " by Hamish Stuart Macpherson
+" modified by Nikos
 "
 
 hi clear
@@ -198,7 +199,7 @@ if &t_Co > 255
 
    hi VertSplit       ctermfg=244 ctermbg=232   cterm=bold
    hi VisualNOS                   ctermbg=238
-   hi Visual                      ctermbg=235
+   hi Visual                      ctermbg=240
    hi WarningMsg      ctermfg=231 ctermbg=238   cterm=bold
    hi WildMenu        ctermfg=81  ctermbg=16
 
