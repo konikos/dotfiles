@@ -75,11 +75,13 @@ let mapleader = "\\"
 
 
 if has("syntax")
-	let g:molokai_original=1
 	syntax on
 	set background=light
 	set t_Co=256
+
+	let g:molokai_original=1
 	colorscheme molokai
+	set cursorline
 endif
 
 " Use sane regexes.
