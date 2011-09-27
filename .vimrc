@@ -156,3 +156,9 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
 " Vertical split and switch over
 nnoremap <leader>w <C-w>v<C-w>l
+
+"Moving between buffers
+nnoremap <leader><leader> :bn!<CR>
+nnoremap <leader><BS> :bp!<CR>
+nnoremap <leader>] <C-w>l
+nnoremap <leader>[ <C-w>h
