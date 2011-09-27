@@ -134,13 +134,17 @@ if has("autocmd")
 	au BufRead,BufNewFile *.vala            setfiletype vala
 	au BufRead,BufNewFile *.vapi            setfiletype vala
 
+	augroup ft_python
+		au!
+		au FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+	augroup END
 
-	" Override defaults
-	autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
-	autocmd FileType c setlocal ts=4 sts=4 sw=4 noexpandtab
-	autocmd FileType php setlocal ts=4 sts=4 sw=4 noexpandtab
-	autocmd FileType make setlocal ts=4 sts=4 sw=4 noexpandtab
-
+	augroup ft_make
+		au!
+		au FileType make setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
+		au FileType make setlocal listchars=tab:▸\ 
+		au FileType make setlocal list
+	augroup END
 endif
 
 
