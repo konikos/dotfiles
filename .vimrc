@@ -162,3 +162,15 @@ nnoremap <leader><leader> :bn!<CR>
 nnoremap <leader><BS> :bp!<CR>
 nnoremap <leader>] <C-w>l
 nnoremap <leader>[ <C-w>h
+
+" GUI Settings {{{
+if has("gui_running")
+	" No menubar
+	set guioptions-=T
+	" No lame tearoff menus
+	set guioptions-=t
+
+	set columns=95
+	set lines=50
+endif
+" }}}
