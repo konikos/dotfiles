@@ -162,15 +162,23 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
 "nnoremap <leader>v V`] TODO
 
-" Vertical split and switch over
-nnoremap <leader>w <C-w>v<C-w>l
-
 "Moving between buffers
 nnoremap <leader><leader> :bn!<CR>
 nnoremap <leader><BS> :bp!<CR>
-nnoremap <leader>] <C-w>l
-nnoremap <leader>[ <C-w>h
 nnoremap <leader>l :ls<CR>
+
+" Windows shortcuts {{{
+nnoremap <leader>ww <C-w>v<C-w>l
+nnoremap <leader>wm <C-w>_
+nnoremap <leader>w+ <C-w>|
+nnoremap <leader>w= <C-w>=
+nnoremap <leader>] <C-w>w
+nnoremap <leader>[ <C-w>W
+nnoremap <leader>} <C-w>x<C-w>w
+nnoremap <leader>{ <C-w>W<C-w>x
+nnoremap <leader>w} <C-w>L
+nnoremap <leader>w{ <C-w>H
+" }}}
 
 " GUI Settings {{{
 if has("gui_running")
