@@ -162,6 +162,7 @@ nnoremap <leader><leader> :bn!<CR>
 nnoremap <leader><BS> :bp!<CR>
 nnoremap <leader>] <C-w>l
 nnoremap <leader>[ <C-w>h
+nnoremap <leader>l :ls<CR>
 
 " GUI Settings {{{
 if has("gui_running")
