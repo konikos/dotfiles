@@ -147,6 +147,14 @@ if has("autocmd")
 	augroup END
 endif
 
+" Autocompletion {{{
+set completeopt=menuone,longest
+" }}}
+
+" SuperTab {{{
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabLongestHighlight = 1
+" }}}
 
 inoremap <F1> <ESC>
 " Remove space characters from the end of the lines
