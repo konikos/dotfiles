@@ -76,13 +76,18 @@ let mapleader = "\\"
 
 if has("syntax")
 	syntax on
-	set background=light
-	set t_Co=256
 
-	let g:molokai_original=1
-	colorscheme molokai
-	set cursorline
-endif
+	colorscheme desert
+
+	if &term == "xterm"
+		set background=light
+		set t_Co=256
+	
+		let g:molokai_original=1
+		colorscheme molokai
+		set cursorline
+	endif
+endi
 
 " Use sane regexes.
 nnoremap / /\v
