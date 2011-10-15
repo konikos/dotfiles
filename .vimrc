@@ -79,7 +79,7 @@ if has("syntax")
 
 	colorscheme desert
 
-	if &term == "xterm"
+	if &term == "xterm" || has("gui_running")
 		set background=light
 		set t_Co=256
 	
