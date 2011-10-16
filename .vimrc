@@ -192,7 +192,11 @@ if has("gui_running")
 	" No lame tearoff menus
 	set guioptions-=t
 
-	set columns=95
-	set lines=50
+	if hostname() == "asgard"
+		set lines=59
+	else
+		set columns=95
+		set lines=50
+	endif
 endif
 " }}}
