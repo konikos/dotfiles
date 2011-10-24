@@ -200,3 +200,58 @@ if has("gui_running")
 	endif
 endif
 " }}}
+
+
+" greek letters mapping
+nnoremap α a
+nnoremap Α A
+nnoremap β b
+nnoremap Β B
+nnoremap ψ c
+nnoremap Ψ C
+nnoremap δ d
+nnoremap Δ D
+nnoremap ε e
+nnoremap Ε E
+nnoremap φ f
+nnoremap Φ F
+nnoremap γ g
+nnoremap Γ G
+nnoremap η h
+nnoremap Η H
+nnoremap ι i
+nnoremap Ι I
+nnoremap ξ j
+nnoremap Ξ J
+nnoremap κ k
+nnoremap Κ K
+nnoremap λ l
+nnoremap Λ L
+nnoremap μ m
+nnoremap Μ M
+nnoremap ν n
+nnoremap Ν N
+nnoremap ο o
+nnoremap Ο O
+nnoremap π p
+nnoremap Π P
+" nnoremap ; q
+" nnoremap ; Q
+nnoremap ρ r
+nnoremap Ρ R
+nnoremap σ s
+nnoremap Σ S
+nnoremap τ t
+nnoremap Τ T
+nnoremap θ u
+nnoremap Θ U
+nnoremap ω v
+nnoremap Ω V
+nnoremap ς w
+nnoremap Σ W
+nnoremap χ x
+nnoremap Χ X
+nnoremap υ y
+nnoremap Υ Y
+nnoremap ζ z
+nnoremap Ζ Z
