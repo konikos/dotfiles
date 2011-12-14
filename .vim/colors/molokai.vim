@@ -145,7 +145,7 @@ if &t_Co > 255
 
    hi Directory       ctermfg=118               cterm=bold
    hi Error           ctermfg=219 ctermbg=89
-   hi ErrorMsg        ctermfg=199               cterm=bold
+   hi ErrorMsg        ctermfg=253               cterm=bold
    hi Exception       ctermfg=118               cterm=bold
    hi Float           ctermfg=135
    hi FoldColumn      ctermfg=67  ctermbg=16
