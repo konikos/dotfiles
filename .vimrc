@@ -155,6 +155,11 @@ if has("autocmd")
 		au FileType make setlocal listchars=tab:▸\ 
 		au FileType make setlocal list
 	augroup END
+
+	augroup ft_yaml
+		au!
+		au FileType yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+	augroup END
 endif
 
 " Autocompletion {{{
