@@ -146,7 +146,7 @@ if has("autocmd")
 
 	augroup ft_html
 		au!
-		au FileType python setlocal tabstop=3 softtabstop=3 shiftwidth=3 expandtab
+		au FileType html setlocal tabstop=3 softtabstop=3 shiftwidth=3 expandtab
 	augroup END
 
 	augroup ft_make
