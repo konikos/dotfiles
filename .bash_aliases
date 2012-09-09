@@ -4,5 +4,5 @@ alias "aria2cM=aria2c -x4 -k1M"
 alias 'ls=ls --group-directories-first --color=auto'
 find-ugly() {
 	find "$@" -print0 \
-		| xargs -0 gawk 'length() >= 80 { print FILENAME ":" $0}'
+		| xargs -0 gawk 'length() >= 80 { print FILENAME ":" NR ":\t" $0}'
 }
