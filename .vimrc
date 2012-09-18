@@ -142,6 +142,8 @@ if has("autocmd")
 	augroup ft_python
 		au!
 		au FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+		au FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+		au FileType python match ErrorMsg '\%>79v.\+'
 	augroup END
 
 	augroup ft_html
