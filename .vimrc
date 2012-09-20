@@ -96,7 +96,6 @@ vnoremap / /\v
 set incsearch
 set showmatch
 set hlsearch
-set gdefault
 
 "set scrolloff=3 TODO
 "set sidescroll=1 TODO
@@ -184,7 +183,7 @@ nnoremap <leader><leader> :bn!<CR>
 nnoremap <leader><BS> :bp!<CR>
 nnoremap <leader>l :ls<CR>
 
-" Windows shortcuts {{{
+" Window shortcuts {{{
 nnoremap <leader>ww <C-w>v<C-w>l
 nnoremap <leader>wm <C-w>_
 nnoremap <leader>w+ <C-w>|
@@ -196,6 +195,10 @@ nnoremap <leader>{ <C-w>W<C-w>x
 nnoremap <leader>w} <C-w>L
 nnoremap <leader>w{ <C-w>H
 " }}}
+
+
+" awesome replace word under cursor
+nnoremap <leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
 
 " GUI Settings {{{
 if has("gui_running")
