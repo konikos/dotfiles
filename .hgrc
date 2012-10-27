@@ -4,6 +4,7 @@ editor = vim
 
 [extensions]
 progress =
+hgsubversion =
 
 [merge-patterns]
 ** = filemerge
