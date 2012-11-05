@@ -12,7 +12,8 @@ pdf-title-fix() {
 	ls -1 "$@" | while read fname; do
 		SRC="$fname"
 		DEST="$fname.new.pdf"
-		echo -e "InfoKey: Title\nInfoValue: ${fname%.*}" \
+		NEW_TITLE=$(basename "${fname%.*}")
+		echo -e "InfoKey: Title\nInfoValue: $NEW_TITLE" \
 			| pdftk "$fname" update_info - output "$DEST";
 		mv "$DEST" "$SRC"
 	done
