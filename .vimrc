@@ -201,6 +201,11 @@ nnoremap <leader>w{ <C-w>H
 " }}}
 
 
+" NERDTree shortcuts {{{
+nnoremap <leader>t :NERDTree<CR>
+" }}}
+
+
 " awesome replace word under cursor
 nnoremap <leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
 
