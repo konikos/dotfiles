@@ -138,6 +138,12 @@ if has("autocmd")
 	au BufRead,BufNewFile *.vala setfiletype vala
 	au BufRead,BufNewFile *.vapi setfiletype vala
 
+	augroup ft_c
+		au!
+		au FileType c,cpp setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
+		au FileType c,cpp match ErrorMsg '\%>79v.\+'
+	augroup END
+
 	augroup ft_python
 		au!
 		au FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
