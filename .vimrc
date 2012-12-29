@@ -170,12 +170,17 @@ if has("autocmd")
 endif
 
 " Autocompletion {{{
-set completeopt=menuone,longest
+set completeopt=menu,menuone,longest
 " }}}
 
 " SuperTab {{{
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabLongestHighlight = 1
+" }}}
+
+" clang_complete {{{
+let g:clang_complete_auto = 0
+let g:clang_library_path = "/usr/lib/"
 " }}}
 
 inoremap <F1> <ESC>
