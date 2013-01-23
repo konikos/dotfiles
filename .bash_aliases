@@ -4,6 +4,8 @@ alias "gdb=gdb -q"
 alias "briss=java -jar /home/konikos/bin/briss-0.9/briss-0.9.jar"
 alias "aria2cM=aria2c -x4 -k1M"
 alias 'ls=ls --group-directories-first --color=auto'
+alias epfl-connect='nmcli con up id "EPFL VPN"'
+alias epfl-disconnect='nmcli con down id "EPFL VPN"'
 
 pdf-crop() {
 	for f in "$@"; do
