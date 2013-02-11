@@ -214,6 +214,7 @@ nnoremap <leader>w{ <C-w>H
 
 " NERDTree shortcuts {{{
 nnoremap <leader>t :NERDTree<CR>
+let NERDTreeIgnore = ['\.pyc$', '\.o$']
 " }}}
 
 
