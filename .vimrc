@@ -144,6 +144,11 @@ if has("autocmd")
 		au FileType c,cpp match ErrorMsg '\%>79v.\+'
 	augroup END
 
+	augroup ft_scala
+		au!
+		au FileType scala setlocal tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab
+	augroup END
+
 	augroup ft_python
 		au!
 		au FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
