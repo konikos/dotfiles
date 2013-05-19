@@ -58,3 +58,10 @@ finddup() {
 incognito() {
 	HISTFILE=/dev/null
 }
+
+# usage: v [VENV_DIR=tmp/venv]
+v() {
+	local VD="$1"
+	[ -z "$VD" ] && VD=tmp/venv
+	. "$VD/bin/activate"
+}
