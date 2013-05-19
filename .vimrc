@@ -137,6 +137,7 @@ if has("autocmd")
 	autocmd BufRead *.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
 	au BufRead,BufNewFile *.vala setfiletype vala
 	au BufRead,BufNewFile *.vapi setfiletype vala
+	au BufRead,BufNewFile *.md set filetype=markdown
 
 	augroup ft_c
 		au!
