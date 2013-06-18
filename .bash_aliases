@@ -1,5 +1,8 @@
 shopt -s histappend
 
+PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+export EDITOR=vim
+
 alias "gdb=gdb -q"
 alias "briss=java -jar /home/konikos/bin/briss-0.9/briss-0.9.jar"
 alias "aria2cM=aria2c -x4 -k1M"
