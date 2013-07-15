@@ -68,3 +68,11 @@ v() {
 	[ -z "$VD" ] && VD=tmp/venv
 	. "$VD/bin/activate"
 }
+
+# usage: super-compress ARCHIVE_NAME FILE..
+super-compress() {
+	local ARCHIVE="$1"
+	shift
+	7za a -t7z  -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on "$ARCHIVE" "$@"
+}
+
