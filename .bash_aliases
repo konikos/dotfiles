@@ -76,3 +76,16 @@ super-compress() {
 	7za a -t7z  -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on "$ARCHIVE" "$@"
 }
 
+
+WARP9_PORT=27401
+
+# usage: warp9-send HOST
+warp9-send() {
+	nc -w 2 "$1" "$WARP9_PORT"
+}
+
+# usage: warp9-receive
+warp9-receive() {
+	nc -l -p "$WARP9_PORT"
+}
+
