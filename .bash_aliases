@@ -11,6 +11,7 @@ alias epfl-connect='nmcli con up id "EPFL VPN"'
 alias epfl-disconnect='nmcli con down id "EPFL VPN"'
 # Looooooooooooooong alias coming up!
 alias clang_complete_make="make CC='~/.vim/bundle/bin/cc_args.py gcc' CXX='~/.vim/bundle/bin/cc_args.py g++' -B"
+alias wget-gzip="wget --header='accept-encoding: gzip'"
 
 pdf-crop() {
 	for f in "$@"; do
