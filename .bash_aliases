@@ -90,3 +90,15 @@ warp9-receive() {
 	nc -l -p "$WARP9_PORT"
 }
 
+
+# usage: serve-http [DIR [PORT]]
+http-serve() {
+	DIR=$(pwd)
+	PORT=8080
+	[ -z "$1" ] || DIR="$1"
+	shift
+	[ -z "$1" ] || PORT="$1"
+	shift
+
+	(cd "$DIR" && python -m SimpleHTTPServer "$PORT")
+}
