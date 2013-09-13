@@ -238,6 +238,8 @@ if has("gui_running")
 	"	set lines=59
 	set columns=105
 	set lines=55
+
+	set guifont=Monospace\ 11
 endif
 " }}}
 
