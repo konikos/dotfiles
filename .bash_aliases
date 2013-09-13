@@ -106,3 +106,13 @@ http-serve() {
 
 	(cd "$DIR" && python -m SimpleHTTPServer "$PORT")
 }
+
+# usage: gpg-edit FILE
+gpg-edit() {
+	local UNENCRYPTED=$(tempfile)
+
+	gpg --decrypt "$1" >"$UNENCRYPTED"
+	vim "$UNENCRYPTED"
+	gpg --encrypt -r 4018F537 <"$UNENCRYPTED" >"$1"
+	shred -f -z -u "$UNENCRYPTED"
+}
