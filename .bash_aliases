@@ -109,10 +109,16 @@ http-serve() {
 
 # usage: gpg-edit FILE
 gpg-edit() {
+	local ENCRYPTED="$1"
 	local UNENCRYPTED=$(tempfile)
 
-	gpg --decrypt "$1" >"$UNENCRYPTED"
+	if [ -f "$ENCRYPTED" ]; then
+		gpg --decrypt "$ENCRYPTED" >"$UNENCRYPTED"
+	else
+		echo "$ENCRYPTED does not exist, it will be created.."
+	fi
+
 	vim "$UNENCRYPTED"
-	gpg --encrypt -r 4018F537 <"$UNENCRYPTED" >"$1"
-	shred -f -z -u "$UNENCRYPTED"
+	gpg --encrypt --recipient 4018F537 <"$UNENCRYPTED" >"$ENCRYPTED"
+	shred --force --zero --remove "$UNENCRYPTED"
 }
