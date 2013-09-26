@@ -12,6 +12,7 @@ alias epfl-disconnect='nmcli con down id "EPFL VPN"'
 # Looooooooooooooong alias coming up!
 alias clang_complete_make="make CC='~/.vim/bundle/bin/cc_args.py gcc' CXX='~/.vim/bundle/bin/cc_args.py g++' -B"
 alias wget-gzip="wget --header='accept-encoding: gzip'"
+alias xclip="xclip -selection c"
 
 apt-urls() {
 	apt-get install --reinstall -qq --print-uris "$@" | cut -d ' ' -f 1 | sed "s/^'\(.*\)'$/\1/g"
