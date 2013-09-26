@@ -129,3 +129,8 @@ gpg-edit() {
 	gpg --encrypt --recipient 4018F537 <"$UNENCRYPTED" >"$ENCRYPTED"
 	shred --force --zero --remove "$UNENCRYPTED"
 }
+
+# ssh-tunnel FROM TO MACHINE
+ssh-tunnel() {
+	ssh -N -L$2:localhost:$1 $3
+}
