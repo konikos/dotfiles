@@ -24,6 +24,12 @@ pdf-crop() {
 	done
 }
 
+pdf-cat() {
+	pdftk "$@" cat output -
+	# OR:
+	# gs -q -sPAPERSIZE=a4 -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=- "$@"
+}
+
 find-ugly() {
 	find "$@" -type f -print0 \
 		| xargs -0 gawk 'length() >= 80 { print FILENAME ":" FNR ":\t" $0}'
