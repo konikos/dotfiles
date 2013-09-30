@@ -173,6 +173,11 @@ if has("autocmd")
 		au!
 		au FileType yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 	augroup END
+
+	augroup ft_scala
+		au!
+		au FileType scala setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+	augroup END
 endif
 
 " Autocompletion {{{
