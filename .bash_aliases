@@ -84,6 +84,17 @@ v() {
 	. "$VD/bin/activate"
 }
 
+# usage: vt TMP_VENV
+# TODO: move to v -t VENV
+vt() {
+	local VD=~/"tmp/venv/$1"
+	if [ ! -d "$VD" ]; then
+		echo "venv directory does not exist: $VD" 1>&2
+		return 1
+	fi
+	v "$VD"
+}
+
 # usage: super-compress ARCHIVE_NAME FILE..
 super-compress() {
 	local ARCHIVE="$1"
@@ -136,4 +147,12 @@ gpg-edit() {
 # ssh-tunnel FROM TO MACHINE
 ssh-tunnel() {
 	ssh -N -L$2:localhost:$1 $3
+}
+
+
+gnome-suspend() {
+	dbus-send --system --print-reply \
+		--dest="org.freedesktop.UPower" \
+		/org/freedesktop/UPower \
+		org.freedesktop.UPower.Suspend
 }
