@@ -4,7 +4,12 @@ shopt -s histappend
 
 PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 export EDITOR=vim
-export PATH="/home/konikos/bin/sbt/bin:$PATH"
+export PATH="$HOME/bin/sbt/bin:$PATH"
+
+if [ -d "$HOME/.rbenv" ]; then
+	export PATH="$HOME/.rbenv/bin:$PATH"
+	eval "$(rbenv init -)"
+fi
 
 alias "gdb=gdb -q"
 alias "briss=java -jar /home/konikos/bin/briss-0.9/briss-0.9.jar"
