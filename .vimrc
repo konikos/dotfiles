@@ -233,10 +233,8 @@ let NERDTreeIgnore = ['\.pyc$', '\.o$']
 nnoremap <leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
 
 " TeX
-fu! TexCountWords(fname)
-	return 0 + system("detex " . shellescape(a:fname) . " \| wc -w")
-endfunction
-nnoremap <leader>tt :echo "Words: " . TexCountWords(bufname('%'))<cr>
+nnoremap <leader>tt :call textex#echoWordsCount()<cr>
+vnoremap <leader>tt :call textex#echoWordsCount()<cr>
 
 nnoremap <leader>ff :make<cr>
 nnoremap <leader>fc :make clean<cr>
