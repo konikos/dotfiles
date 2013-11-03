@@ -240,6 +240,9 @@ fu! TexCountWords(fname)
 endfunction
 nnoremap <leader>tt :call TexCountWords(expand('%'))<cr>
 
+nnoremap <leader>ff :make<cr>
+nnoremap <leader>fc :make clean<cr>
+
 " GUI Settings {{{
 if has("gui_running")
 	" No menubar
