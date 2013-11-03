@@ -232,6 +232,14 @@ let NERDTreeIgnore = ['\.pyc$', '\.o$']
 " awesome replace word under cursor
 nnoremap <leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
 
+" TeX
+let pref = "<leader>f"
+fu! TexCountWords(fname)
+	let word_count = system("detex " . shellescape(a:fname) . " \| wc -w")
+	:echo "Words: " . substitute(word_count, '\n$', '', '')
+endfunction
+nnoremap <leader>ff :call TexCountWords(expand('%'))<cr>
+
 " GUI Settings {{{
 if has("gui_running")
 	" No menubar
