@@ -238,7 +238,7 @@ fu! TexCountWords(fname)
 	let word_count = system("detex " . shellescape(a:fname) . " \| wc -w")
 	:echo "Words: " . substitute(word_count, '\n$', '', '')
 endfunction
-nnoremap <leader>tt :call TexCountWords(expand('%'))<cr>
+nnoremap <leader>tt :call TexCountWords(bufname('%'))<cr>
 
 nnoremap <leader>ff :make<cr>
 nnoremap <leader>fc :make clean<cr>
