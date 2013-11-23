@@ -4,7 +4,7 @@ shopt -s histappend
 
 PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 export EDITOR=vim
-export PATH="$HOME/bin/sbt/bin:$PATH"
+export PATH="$HOME/bin/sbt/bin:$HOME/bin/texlive/2013/bin/x86_64-linux/:$PATH"
 
 if [ -d "$HOME/.rbenv" ]; then
 	export PATH="$HOME/.rbenv/bin:$PATH"
