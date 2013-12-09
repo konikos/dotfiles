@@ -191,7 +191,7 @@ let g:SuperTabLongestHighlight = 1
 
 " clang_complete {{{
 let g:clang_complete_auto = 0
-let g:clang_library_path = "/usr/lib/"
+let g:clang_library_path = "/usr/lib/llvm-3.2/lib/"
 " }}}
 
 inoremap <F1> <ESC>
