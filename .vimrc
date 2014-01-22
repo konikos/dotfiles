@@ -178,6 +178,15 @@ if has("autocmd")
 		au!
 		au FileType scala setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 	augroup END
+
+	augroup ft_sma
+		au!
+		au BufRead,BufNewFile *.sma set filetype=sma
+		au FileType sma runtime! syntax/c.vim
+		au FileType sma set errorformat=%f(%l)\ :\ error\ %n:\ %m
+		au FileType sma set makeprg=/home/konikos/bin/amxxpc\ %\ -i/home/konikos/bin/amxx/\ -o%r
+	augroup END
+
 endif
 
 " Autocompletion {{{
