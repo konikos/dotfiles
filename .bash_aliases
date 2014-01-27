@@ -82,23 +82,54 @@ incognito() {
 	HISTFILE=/dev/null
 }
 
-# usage: v [VENV_DIR=tmp/venv]
+# usage: v [-c] [VENV=./tmp/venv] [CREATE_ARGS..]
+# usage: v -t [-c] VENV [CREATE_ARGS..]
 v() {
-	local VD="$1"
-	[ -z "$VD" ] && VD=tmp/venv
-	. "$VD/bin/activate"
+	local OPTIND
+	local CREATE=false
+	local TEMP=false
+
+	# process options
+	while getopts "cth" opt; do
+		case "$opt" in
+			c) CREATE=true ;;
+			t) TEMP=true ;;
+			h)
+				echo "v [-c] [VENV=./tmp/venv]" 1>&2
+				echo "v -t [-c] VENV" 1>&2
+				return 0
+				;;
+			?)
+				echo "v: error $opt" 1>&2
+				return 1
+				;;
+		esac
+	done
+	shift $((OPTIND-1))
+
+	local VENV="$1"; shift
+	if $TEMP; then
+		if [ -z "$VENV" ]; then
+			echo "v: VENV should be provided if used with -t" 1>&2
+			return 1
+		fi
+		VENV="${HOME}/tmp/venv/$VENV"
+	elif [ -z "$VENV" ]; then
+		VENV=./tmp/venv
+	fi
+
+	local ACTIVATE="${VENV}/bin/activate"
+	if $CREATE; then
+		if [ -f "${ACTIVATE}" ]; then
+			echo "v: virtualenv already exists at $VENV" 1>&2
+			return 1
+		fi
+		virtualenv "$@" "$VENV"
+	fi
+
+	. "$ACTIVATE"
 }
 
-# usage: vt TMP_VENV
-# TODO: move to v -t VENV
-vt() {
-	local VD=~/"tmp/venv/$1"
-	if [ ! -d "$VD" ]; then
-		echo "venv directory does not exist: $VD" 1>&2
-		return 1
-	fi
-	v "$VD"
-}
 
 # usage: super-compress ARCHIVE_NAME FILE..
 super-compress() {
