@@ -2,9 +2,32 @@
 " properly set to work with the Vim-related packages available in Debian.
 runtime! debian.vim
 
-call pathogen#infect()
+set nocompatible              " be iMproved
+filetype off                  " required!
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+" required! 
+Bundle 'gmarik/vundle'
+
+Bundle 'ervandew/supertab'
+Bundle 'scrooloose/syntastic'
+Bundle 'rstacruz/sparkup'
+Bundle 'kien/ctrlp.vim'
+Bundle 'terryma/vim-multiple-cursors'
+Bundle 'scrooloose/nerdtree'
+Bundle 'sjl/gundo.vim'
+
+Bundle 'Rip-Rip/clang_complete'
+Bundle 'othree/html5.vim'
+Bundle 'groenewege/vim-less'
+
+filetype plugin indent on     " required!
 
 
+" Core VIM options {{{
 set encoding=utf-8
 set modelines=0
 set autoindent
@@ -13,7 +36,7 @@ set showcmd
 "set visualbell
 set backspace=indent,eol,start
 set nonumber
-set norelativenumber
+set relativenumber
 "set laststatus=2
 set history=1000
 "set undofile
@@ -25,7 +48,9 @@ set splitright
 "set fillchars=diff:\ TODO TODO
 "set notimeout TODO
 "set nottimeout TODO
-set hidden
+set hidden " loads a buffer in a window that has an unmodified buffer
+" }}}
+
 
 " Wildmenu completion {{{
 set wildmenu
@@ -41,13 +66,10 @@ set wildignore+=*.sw?                            " Vim swap files
 set wildignore+=*.DS_Store?                      " OSX bullshit
 " }}}
 
-set backupskip=/tmp/*
-
-" Save when losing focus
-"au FocusLost * :wa
 
 " Resize splits when the window is resized
 au VimResized * exe "normal! \<c-w>="
+
 
 " Tabs, spaces, wrapping {{{
 set tabstop=4
@@ -60,11 +82,13 @@ set wrap
 "set colorcolumn=+1
 " }}}
 
+
 " Backups {{{
 set undodir=~/.vim/tmp/undo//     " undo files
 set backupdir=~/.vim/tmp/backup// " backups
 set directory=~/.vim/tmp/swap//   " swap files
 set backup                        " enable backups
+set backupskip=/tmp/*
 " }}}
 
 
@@ -74,6 +98,7 @@ let mapleader = "\\"
 " }}}
 
 
+" Colorscheme {{{
 if has("syntax")
 	syntax on
 
@@ -88,14 +113,21 @@ if has("syntax")
 		set cursorline
 	endif
 endi
+" }}}
 
-" Use sane regexes.
-nnoremap / /\v
-vnoremap / /\v
+
+" Search options {{{
+" Sane regexes
+" nnoremap / /\v TODO
+" vnoremap / /\v TODO
 
 set incsearch
 set showmatch
 set hlsearch
+
+noremap <leader><space> :noh<cr>:call clearmatches()<cr>
+" }}}
+
 
 "set scrolloff=3 TODO
 "set sidescroll=1 TODO
@@ -103,14 +135,14 @@ set hlsearch
 
 "set virtualedit+=block TODO
 
-noremap <leader><space> :noh<cr>:call clearmatches()<cr>
-
-" Made D behave
+" Make D behave
 nnoremap D d$
 
 " Don't move on *
 nnoremap * *<c-o>
 
+
+" Moving around {{{
 " Keep search matches in the middle of the window.
 nnoremap n nzzzv
 nnoremap N Nzzzv
@@ -126,9 +158,10 @@ noremap k gk
 if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
+" }}}
 
-" Uncomment the following to have Vim load indentation rules and plugins
-" according to the detected filetype.
+
+" Filetype related stuff {{{
 if has("autocmd")
 	filetype plugin indent on
 
@@ -188,6 +221,8 @@ if has("autocmd")
 	augroup END
 
 endif
+" }}}
+
 
 " Autocompletion {{{
 set completeopt=menu,menuone,longest
@@ -202,6 +237,13 @@ let g:SuperTabLongestHighlight = 1
 let g:clang_complete_auto = 0
 let g:clang_library_path = "/usr/lib/llvm-3.2/lib/"
 " }}}
+
+
+" NERDTree shortcuts {{{
+nnoremap <leader>t :NERDTree<CR>
+let NERDTreeIgnore = ['\.pyc$', '\.o$']
+" }}}
+
 
 inoremap <F1> <ESC>
 " Remove space characters from the end of the lines
@@ -232,31 +274,25 @@ nnoremap <leader>w{ <C-w>H
 " }}}
 
 
-" NERDTree shortcuts {{{
-nnoremap <leader>t :NERDTree<CR>
-let NERDTreeIgnore = ['\.pyc$', '\.o$']
-" }}}
-
-
 " awesome replace word under cursor
 nnoremap <leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
 
-" TeX
-nnoremap <leader>tt :call textex#echoWordsCount()<cr>
-vnoremap <leader>tt :call textex#echoWordsCount()<cr>
+
+"" TeX
+"nnoremap <leader>tt :call textex#echoWordsCount()<cr>
+"vnoremap <leader>tt :call textex#echoWordsCount()<cr>
 
 nnoremap <leader>ff :make<cr>
 nnoremap <leader>fc :make clean<cr>
 
-" GUI Settings {{{
+
+" GUI specific settings {{{
 if has("gui_running")
 	" No menubar
 	set guioptions-=T
 	" No lame tearoff menus
 	set guioptions-=t
 
-	"if hostname() == "asgard"
-	"	set lines=59
 	set columns=105
 	set lines=55
 
@@ -264,57 +300,3 @@ if has("gui_running")
 endif
 " }}}
 
-
-" greek letters mapping
-nnoremap α a
-nnoremap Α A
-nnoremap β b
-nnoremap Β B
-nnoremap ψ c
-nnoremap Ψ C
-nnoremap δ d
-nnoremap Δ D
-nnoremap ε e
-nnoremap Ε E
-nnoremap φ f
-nnoremap Φ F
-nnoremap γ g
-nnoremap Γ G
-nnoremap η h
-nnoremap Η H
-nnoremap ι i
-nnoremap Ι I
-nnoremap ξ j
-nnoremap Ξ J
-nnoremap κ k
-nnoremap Κ K
-nnoremap λ l
-nnoremap Λ L
-nnoremap μ m
-nnoremap Μ M
-nnoremap ν n
-nnoremap Ν N
-nnoremap ο o
-nnoremap Ο O
-nnoremap π p
-nnoremap Π P
-" nnoremap ; q
-" nnoremap ; Q
-nnoremap ρ r
-nnoremap Ρ R
-nnoremap σ s
-nnoremap Σ S
-nnoremap τ t
-nnoremap Τ T
-nnoremap θ u
-nnoremap Θ U
-nnoremap ω v
-nnoremap Ω V
-nnoremap ς w
-nnoremap Σ W
-nnoremap χ x
-nnoremap Χ X
-nnoremap υ y
-nnoremap Υ Y
-nnoremap ζ z
-nnoremap Ζ Z
