@@ -19,10 +19,11 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'terryma/vim-multiple-cursors'
 Bundle 'scrooloose/nerdtree'
 Bundle 'sjl/gundo.vim'
-
 Bundle 'Rip-Rip/clang_complete'
 Bundle 'othree/html5.vim'
 Bundle 'groenewege/vim-less'
+
+Bundle 'derekwyatt/vim-scala'
 
 filetype plugin indent on     " required!
 
