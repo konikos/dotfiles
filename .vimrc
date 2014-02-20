@@ -250,8 +250,10 @@ inoremap <F1> <ESC>
 " Remove space characters from the end of the lines
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
-" Paste from the system clipboard
+" Copy/paste from the system clipboard
 nnoremap <leader>p "+p
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
 
 
 "nnoremap <leader>v V`] TODO
