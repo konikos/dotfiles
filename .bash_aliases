@@ -23,27 +23,32 @@ alias wget-gzip="wget --header='accept-encoding: gzip'"
 alias xclip="xclip -selection c"
 alias vim-update="vim +BundleInstall +qall"
 
+# usage: apt-urls PACKAGE..
 apt-urls() {
 	apt-get install --reinstall -qq --print-uris "$@" | cut -d ' ' -f 1 | sed "s/^'\(.*\)'$/\1/g"
 }
 
+# usage: pdf-crop [PDF..]
 pdf-crop() {
 	for f in "$@"; do
 		briss -s "$f"
 	done
 }
 
+# usage: pdf-cat [PDF..]
 pdf-cat() {
 	pdftk "$@" cat output -
 	# OR:
 	# gs -q -sPAPERSIZE=a4 -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=- "$@"
 }
 
+# usage: find-ugly [FILE_OR_DIR..]
 find-ugly() {
 	find "$@" -type f -print0 \
 		| xargs -0 gawk 'length() >= 80 { print FILENAME ":" FNR ":\t" $0}'
 }
 
+# usage: pdf-title-fix [PDF..]
 pdf-title-fix() {
 	ls -1 "$@" | while read fname; do
 		SRC="$fname"
@@ -55,6 +60,7 @@ pdf-title-fix() {
 	done
 }
 
+# usage: mobi2epub [EPUB..]
 mobi2epub() {
 	ls -1 "$@" | while read mobi; do
 		EPUB="${mobi%.*}.epub"
@@ -62,6 +68,7 @@ mobi2epub() {
 	done
 }
 
+# usage: svg2ico SVG
 svg2ico() {
 	echo "Not finished"
 	return
@@ -74,6 +81,7 @@ svg2ico() {
 	done
 }
 
+# usage: finddup [DIR..]
 # Find duplicate files, based on size first, then MD5 hash
 finddup() {
 	find "$@" -not -empty -type f -printf "%s\n" | sort -rn | uniq -d | xargs -I{} -n1 find -type f -size {}c -print0 | xargs -0 md5sum | sort | uniq -w32 --all-repeated=separate
@@ -181,11 +189,10 @@ gpg-edit() {
 	shred --force --zero --remove "$UNENCRYPTED"
 }
 
-# ssh-tunnel FROM TO MACHINE
+# usage: ssh-tunnel FROM TO MACHINE
 ssh-tunnel() {
 	ssh -N -L$2:localhost:$1 $3
 }
-
 
 gnome-suspend() {
 	dbus-send --system --print-reply \
