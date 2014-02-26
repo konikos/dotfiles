@@ -193,3 +193,22 @@ gnome-suspend() {
 		/org/freedesktop/UPower \
 		org.freedesktop.UPower.Suspend
 }
+
+
+help() {
+	command help "$@"
+	if [ $# -gt 0 ]; then
+		return
+	fi
+
+	echo
+	echo "Custom commands:"
+
+	cat ~/.bash_aliases \
+		| grep -o '^[^_][[:alnum:]-]*()' | grep -v '^help()$' \
+		| sed -e 's/()$//' | sort \
+		| while read CMD; do 
+			grep "^# usage: $CMD" ~/.bash_aliases | sed -e 's/^# usage: / /'
+		done
+}
+
