@@ -204,11 +204,9 @@ help() {
 	echo
 	echo "Custom commands:"
 
-	cat ~/.bash_aliases \
-		| grep -o '^[^_][[:alnum:]-]*()' | grep -v '^help()$' \
-		| sed -e 's/()$//' | sort \
-		| while read CMD; do 
-			grep "^# usage: $CMD" ~/.bash_aliases | sed -e 's/^# usage: / /'
-		done
+	cat "$HOME/.bash_aliases" \
+		| egrep '(^[^_][[:alnum:]-]*\(\))|(^# usage: )' \
+		| sed -e 's/() {//' -e '/^help$/d' -e 's/^# usage: //' -e 's/^/ /' \
+		| sort #| sort -r | awk 'commands[$1]++ && NF != 1'
 }
 
