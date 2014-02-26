@@ -213,7 +213,9 @@ help() {
 
 	cat "$HOME/.bash_aliases" \
 		| egrep '(^[^_][[:alnum:]-]*\(\))|(^# usage: )' \
-		| sed -e 's/() {//' -e '/^help$/d' -e 's/^# usage: //' -e 's/^/ /' \
-		| sort #| sort -r | awk 'commands[$1]++ && NF != 1'
+		| sed -e 's/() {//' -e '/^help$/d' -e 's/^# usage: //' \
+		| sort -r \
+		| awk '++c[$1] && (NF > 1 || c[$1] == 1)' \
+		| sort | sed -e 's/^/ /'
 }
 
