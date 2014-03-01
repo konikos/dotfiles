@@ -14,7 +14,6 @@ Bundle 'gmarik/vundle'
 
 Bundle 'ervandew/supertab'
 Bundle 'scrooloose/syntastic'
-Bundle 'rstacruz/sparkup'
 Bundle 'kien/ctrlp.vim'
 Bundle 'terryma/vim-multiple-cursors'
 Bundle 'scrooloose/nerdtree'
