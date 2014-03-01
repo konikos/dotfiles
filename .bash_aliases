@@ -204,18 +204,27 @@ gnome-suspend() {
 
 help() {
 	command help "$@"
-	if [ $# -gt 0 ]; then
-		return
-	fi
+
+	while [ ${1:0:1} = '-' ]; do
+		case "$1" in
+			--) shift; break ;;
+			-*) shift ;;
+		esac
+	done
 
 	echo
-	echo "Custom commands:"
+	echo "CUSTOM COMMANDS:"
 
 	cat "$HOME/.bash_aliases" \
 		| egrep '(^[^_][[:alnum:]-]*\(\))|(^# usage: )' \
 		| sed -e 's/() {//' -e '/^help$/d' -e 's/^# usage: //' \
 		| sort -r \
 		| awk '++c[$1] && (NF > 1 || c[$1] == 1)' \
-		| sort | sed -e 's/^/ /'
+		| sort \
+		| if [ $# -gt 0 ]; then
+			grep "^$1" | sed 's/^\([^ ]*\) /\1: \1 /'
+		else
+			sed -e 's/^/ /'
+		fi
 }
 
