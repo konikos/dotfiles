@@ -59,6 +59,7 @@ set wildmode=list:longest
 set wildignore+=.hg,.git,.svn                    " Version control
 set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
+set wildignore+=*.mp4,*.mkv,*.flv,*.avi,*.mov,*.wmv,*.webm,*.vob
 set wildignore+=*.luac                           " Lua byte code
 set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
 set wildignore+=*.pyc                            " Python byte code
@@ -242,6 +243,10 @@ let g:clang_library_path = "/usr/lib/llvm-3.2/lib/"
 " NERDTree shortcuts {{{
 nnoremap <leader>t :NERDTree<CR>
 let NERDTreeIgnore = ['\.pyc$', '\.o$']
+" }}}
+
+" ctrlp.vim {{{
+let g:ctrlp_cmd = 'CtrlPBuffer'
 " }}}
 
 
