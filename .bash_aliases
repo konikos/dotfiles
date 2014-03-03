@@ -228,3 +228,10 @@ help() {
 		fi
 }
 
+# usage: sbt-main MAIN_CLASS
+# Run sbt with MAIN_CLASS set as the default main class.
+sbt-main() {
+	local CLASS="$1"; shift
+	sbt '; set mainClass in (Compile, run) := Some("'"$CLASS"'")' "$@"
+}
+
