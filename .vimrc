@@ -21,7 +21,7 @@ Bundle 'sjl/gundo.vim'
 Bundle 'Rip-Rip/clang_complete'
 Bundle 'othree/html5.vim'
 Bundle 'groenewege/vim-less'
-
+Bundle 'tristen/vim-sparkup'
 Bundle 'derekwyatt/vim-scala'
 
 filetype plugin indent on     " required!
