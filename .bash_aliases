@@ -235,3 +235,24 @@ sbt-main() {
 	sbt '; set mainClass in (Compile, run) := Some("'"$CLASS"'")' "$@"
 }
 
+# usage: mailme SUBJECT <BODY
+mailme() {
+	if [ "$#" -lt 1 ]; then
+		echo "usage: mailme SUBJECT <BODY" 1>&2
+		return 1
+	fi
+
+	local SUBJECT="$1" 
+	local KEY=$(cat ~/.mailgunkey)
+	local DOMAIN='notifications.konikos.com'
+	local FROM="me@${DOMAIN}"
+	local TO='kokolakisnikos@gmail.com'
+
+	curl -s -k --user "api:$KEY" \
+		"https://api.mailgun.net/v2/${DOMAIN}/messages" \
+		-F from="$FROM" \
+		-F to="$TO" \
+		-F subject="[mailme] $SUBJECT" \
+		-F text='<-'
+}
+
