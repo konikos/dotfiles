@@ -10,3 +10,9 @@
 	log-short = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d %Cblue%an <%ae> %Cgreen(%cr)%Creset%n %s%n %b'
 	dc = diff --cached
 
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+[mergetool]
+	prompt = false
+
