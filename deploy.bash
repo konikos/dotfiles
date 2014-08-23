@@ -3,15 +3,18 @@
 set -e
 
 REPO=https://konikos@github.com/konikos/dotfiles.git
-DEPLOY_SCRIPT=deploy.bash
+USELESS_FILES=( deploy.bash README.md )
 
 TEMPDIR=$(mktemp -d)
 git clone "$REPO" "$TEMPDIR"
 
 cd "$TEMPDIR"
 git submodule update --init --recursive
-git update-index --assume-unchanged "$DEPLOY_SCRIPT"
-rm -f "$DEPLOY_SCRIPT"
+
+for F in "${USELESS_FILES[@]}"; do
+	git update-index --assume-unchanged "$F"
+	rm -f "$F"
+done
 
 cd "$HOME"
 rsync -avr "${TEMPDIR}/" "${HOME}/"
