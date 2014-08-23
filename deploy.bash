@@ -2,7 +2,7 @@
 
 set -e
 
-REPO=git@github.com:konikos/dotfiles.git
+REPO=https://konikos@github.com/konikos/dotfiles.git
 DEPLOY_SCRIPT=deploy.bash
 
 TEMPDIR=$(mktemp -d)
