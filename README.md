@@ -8,7 +8,7 @@ Deploy
 
 Credits
 -------
-  - Steve Losh's great [vim posts](sjl-blog) and [vimrc](sjl-vimrc).
+  - Steve Losh's great [vim posts][sjl-blog] and [vimrc][sjl-vimrc].
 
 [sjl-blog]: http://stevelosh.com/blog/
 [sjl-vimrc]: https://bitbucket.org/sjl/dotfiles/src/tip/vim/vimrc?at=default
