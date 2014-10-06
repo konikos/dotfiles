@@ -176,17 +176,12 @@ http-serve() {
 # usage: gpg-edit FILE
 gpg-edit() {
 	local ENCRYPTED="$1"
-	local UNENCRYPTED=$(tempfile)
 
-	if [ -f "$ENCRYPTED" ]; then
-		gpg --decrypt "$ENCRYPTED" >"$UNENCRYPTED"
-	else
-		echo "$ENCRYPTED does not exist, it will be created.."
-	fi
-
-	vim "$UNENCRYPTED"
-	gpg --encrypt --recipient 4018F537 <"$UNENCRYPTED" >"$ENCRYPTED"
-	shred --force --zero --remove "$UNENCRYPTED"
+	exec 3<<<""
+	gpg --decrypt <"$ENCRYPTED" >/dev/fd/3
+	vim /dev/fd/3
+	gpg --encrypt --recipient 4018F537 <&3 >"$ENCRYPTED"
+	exec 3>&-
 }
 
 # usage: ssh-tunnel FROM TO MACHINE
