@@ -3,22 +3,21 @@
 set -e
 
 REPO=https://konikos@github.com/konikos/dotfiles.git
-USELESS_FILES=( deploy.bash README.md )
+USELESS_FILES=( deploy.bash README.md .gitmodules .git )
 
-TEMPDIR=$(mktemp -d)
-git clone "$REPO" "$TEMPDIR"
+DOTFILES_DIR="${HOME}/.dotfiles"
+git clone "$REPO" "$DOTFILES_DIR"
 
-cd "$TEMPDIR"
-git submodule update --init --recursive
+cd "$DOTFILES_DIR"
+git -C "$DOTFILES_DIR" submodule update --init --recursive
 
-for F in "${USELESS_FILES[@]}"; do
-	git update-index --assume-unchanged "$F"
-	rm -f "$F"
+find "$DOTFILES_DIR" -maxdepth 1 | while read F; do
+	ln -s "$F" "${HOME}/$(basename "$F")"
 done
 
-cd "$HOME"
-rsync -avr "${TEMPDIR}/" "${HOME}/"
-rm -rf "$TEMPDIR"
+for F in "${USELESS_FILES[@]}"; do
+	rm -f "${HOME}/$F"
+done
 
 echo "dotfiles deployed, enjoy."
 

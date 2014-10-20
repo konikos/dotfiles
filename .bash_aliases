@@ -251,15 +251,6 @@ mailme() {
 		-F text='<-'
 }
 
-git() {
-	local GIT_ROOT="$(command git rev-parse --show-toplevel)"
-	if [ "$GIT_ROOT" == "$HOME" ]; then
-		echo "[WARNING]: running git in dotfiles" 1>&2
-	fi
-
-	command git "$@"
-}
-
 if [ -f ~/.bash_local ]; then
 	. ~/.bash_local
 fi
