@@ -9,7 +9,7 @@ DOTFILES_DIR="${HOME}/.dotfiles"
 git clone "$REPO" "$DOTFILES_DIR"
 
 cd "$DOTFILES_DIR"
-git -C "$DOTFILES_DIR" submodule update --init --recursive
+(cd "$DOTFILES_DIR" && git submodule update --init --recursive)
 
 find "$DOTFILES_DIR" -maxdepth 1 | while read F; do
 	ln -s "$F" "${HOME}/$(basename "$F")"
