@@ -4,15 +4,8 @@ shopt -s histappend
 
 PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 export EDITOR=vim
-export PATH="$HOME/bin/sbt:$HOME/bin/texlive/2013/bin/x86_64-linux/:$PATH"
-
-if [ -d "$HOME/.rbenv" ]; then
-	export PATH="$HOME/.rbenv/bin:$PATH"
-	eval "$(rbenv init -)"
-fi
 
 alias "gdb=gdb -q"
-alias "briss=java -jar /home/konikos/bin/briss-0.9/briss-0.9.jar"
 alias "aria2cM=aria2c -x4 -k1M"
 alias 'ls=ls --group-directories-first --color=auto'
 alias epfl-connect='nmcli con up id "EPFL VPN"'
