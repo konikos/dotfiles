@@ -230,18 +230,24 @@ mailme() {
 		return 1
 	fi
 
-	local SUBJECT="$1" 
-	local KEY=$(cat ~/.mailgunkey)
-	local DOMAIN='notifications.konikos.com'
-	local FROM="me@${DOMAIN}"
 	local TO='kokolakisnikos@gmail.com'
+	local SUBJECT="[mailme] $1"
 
-	curl -s -k --user "api:$KEY" \
-		"https://api.mailgun.net/v2/${DOMAIN}/messages" \
-		-F from="$FROM" \
-		-F to="$TO" \
-		-F subject="[mailme] $SUBJECT" \
-		-F text='<-'
+	if [[ -f ~/.mailgunkey ]]; then
+		local KEY=$(cat ~/.mailgunkey)
+		local DOMAIN='notifications.konikos.com'
+		local FROM="me@${DOMAIN}"
+
+		curl -s -k --user "api:$KEY" \
+			"https://api.mailgun.net/v2/${DOMAIN}/messages" \
+			-F from="$FROM" \
+			-F to="$TO" \
+			-F subject="$SUBJECT" \
+			-F text='<-'
+	else
+		mail -s "$SUBJECT" "$TO"
+	fi
+
 }
 
 if [ -f ~/.bash_local ]; then
