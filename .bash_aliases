@@ -250,6 +250,14 @@ mailme() {
 
 }
 
+sprunge() {
+	curl -F 'sprunge=<-' "http://sprunge.us"
+}
+
+sprunge-copy() {
+	sprunge | xclip
+}
+
 if [ -f ~/.bash_local ]; then
 	. ~/.bash_local
 fi
