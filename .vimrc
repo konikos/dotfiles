@@ -236,7 +236,7 @@ let g:SuperTabLongestHighlight = 1
 
 " clang_complete {{{
 let g:clang_complete_auto = 0
-let g:clang_library_path = "/usr/lib/llvm-3.4/lib/"
+let g:clang_library_path = "/usr/lib/llvm-3.5/lib/"
 " }}}
 
 
@@ -303,7 +303,7 @@ if has("gui_running")
 	set columns=105
 	set lines=55
 
-	set guifont=Monospace\ 11
+	set guifont=Monospace\ 10
 endif
 " }}}
 
