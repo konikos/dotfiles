@@ -258,6 +258,24 @@ sprunge-copy() {
 	sprunge | xclip
 }
 
+# usage: randstr LEN [CHARS='_A-Za-z0-9@#$%^&*()=-']
+# Generate a random string of length LEN using
+randstr() {
+	local LEN=$1
+	if [[ $LEN -lt 1 ]]; then
+		echo "usage: randstr LEN [CHARS]" 1>&2
+		echo " LEN should be > 0" 1>&2
+		return 1
+	fi
+
+	local CHARS=$2
+	if [[ ! $CHARS ]]; then
+		CHARS='_A-Za-z0-9@#$%^&*()=-'
+	fi
+
+	< /dev/urandom tr -dc "$CHARS" | head -c${1:-$LEN}; echo
+}
+
 if [ -f ~/.bash_local ]; then
 	. ~/.bash_local
 fi
