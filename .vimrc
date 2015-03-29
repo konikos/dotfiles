@@ -2,6 +2,8 @@
 " properly set to work with the Vim-related packages available in Debian.
 runtime! debian.vim
 
+runtime! macros/matchit.vim
+
 set nocompatible              " be iMproved
 filetype off                  " required!
 
