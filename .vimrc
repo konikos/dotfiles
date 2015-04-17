@@ -197,7 +197,7 @@ if has("autocmd")
 
 	augroup ft_html
 		au!
-		au FileType html setlocal tabstop=3 softtabstop=3 shiftwidth=3 expandtab
+		au FileType html setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 	augroup END
 
 	augroup ft_make
