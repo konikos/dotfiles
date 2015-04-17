@@ -2,8 +2,6 @@
 " properly set to work with the Vim-related packages available in Debian.
 runtime! debian.vim
 
-runtime! macros/matchit.vim
-
 set nocompatible              " be iMproved
 filetype off                  " required!
 
@@ -28,6 +26,10 @@ Bundle 'derekwyatt/vim-scala'
 
 filetype plugin indent on     " required!
 
+" Super extra cool matching awesomeness for html tags and more {{{
+runtime! macros/matchit.vim
+let b:match_debug=1 " Required otherwise matchit macros mess up paren matching.
+" }}}
 
 " Core VIM options {{{
 set encoding=utf-8
