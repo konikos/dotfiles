@@ -23,6 +23,8 @@ Bundle 'othree/html5.vim'
 Bundle 'groenewege/vim-less'
 Bundle 'tristen/vim-sparkup'
 Bundle 'derekwyatt/vim-scala'
+Bundle 'pangloss/vim-javascript'
+Bundle 'rking/ag.vim'
 
 filetype plugin indent on     " required!
 
@@ -223,6 +225,11 @@ if has("autocmd")
 		au FileType sma runtime! syntax/c.vim
 		au FileType sma set errorformat=%f(%l)\ :\ error\ %n:\ %m
 		au FileType sma set makeprg=/home/konikos/bin/amxxpc\ %\ -i/home/konikos/bin/amxx/\ -o%r
+	augroup END
+
+	augroup ft_javscript
+		au!
+		au FileType javascript setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 	augroup END
 
 endif
