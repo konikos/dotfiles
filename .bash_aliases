@@ -276,6 +276,22 @@ randstr() {
 	< /dev/urandom tr -dc "$CHARS" | head -c${1:-$LEN}; echo
 }
 
+# usage: sumlines <INTEGERS
+# Sums a list of integers
+sumlines() {
+	awk '{ sum += $1 } END { print sum }'
+}
+
+# usage: wget-mirror URL
+# Mirror the contents of website under URL
+wget-mirror() {
+	wget \
+		--user-agent "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0" \
+		--mirror --convert-links --adjust-extension \
+		--page-requisites --no-parent --continue \
+		"$@"
+}
+
 if [ -f ~/.bash_local ]; then
 	. ~/.bash_local
 fi
