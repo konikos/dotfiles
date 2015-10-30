@@ -294,6 +294,7 @@ nnoremap <leader>w{ <C-w>H
 
 " awesome replace word under cursor
 nnoremap <leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
+nnoremap <leader>S :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
 
 
 "" TeX
