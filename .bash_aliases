@@ -5,6 +5,8 @@ shopt -s histappend
 PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 export EDITOR=vim
 
+PATH="$PATH:$HOME/bin"
+
 alias "gdb=gdb -q"
 alias "aria2cM=aria2c -x4 -k1M"
 alias 'ls=ls --group-directories-first --color=auto'
