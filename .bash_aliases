@@ -22,6 +22,11 @@ alias ':h=:help'
 # Prints help for functions which are defined in ~/.bash_aliases
 # usage: :help [FUNCTION]
 :help() {
+	local columnize="pr --columns=2 --omit-header"
+	if ! type pr >/dev/null 2>&1; then
+		columnize=cat
+	fi
+
 	cat "$HOME/.bash_aliases" \
 		| egrep '(^[^_][[:alnum:]-]*\(\))|(^# usage: )' \
 		| sed -e 's/() {//' -e 's/^# usage: //I' \
@@ -31,7 +36,7 @@ alias ':h=:help'
 		| if [[ $# -gt 0 ]]; then
 			grep "^$1" | sed 's/^\([^ ]*\) /\1: \1 /'
 		else
-			sed -e 's/^/ /'
+			sed -e 's/^/ /' | $columnize
 		fi
 }
 
