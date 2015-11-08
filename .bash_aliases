@@ -16,6 +16,26 @@ alias wget-gzip="wget --header='accept-encoding: gzip'"
 alias xclip="xclip -selection c"
 alias vim-update="vim +BundleInstall +BundleUpdate +qall"
 
+alias ':h=:help'
+
+
+# Prints help for functions which are defined in ~/.bash_aliases
+# usage: :help [FUNCTION]
+:help() {
+	cat "$HOME/.bash_aliases" \
+		| egrep '(^[^_][[:alnum:]-]*\(\))|(^# usage: )' \
+		| sed -e 's/() {//' -e 's/^# usage: //I' \
+		| sort -r \
+		| awk '++c[$1] && (NF > 1 || c[$1] == 1)' \
+		| sort \
+		| if [[ $# -gt 0 ]]; then
+			grep "^$1" | sed 's/^\([^ ]*\) /\1: \1 /'
+		else
+			sed -e 's/^/ /'
+		fi
+}
+
+
 # usage: apt-urls PACKAGE..
 apt-urls() {
 	apt-get install --reinstall -qq --print-uris "$@" | cut -d ' ' -f 1 | sed "s/^'\(.*\)'$/\1/g"
@@ -189,32 +209,6 @@ gnome-suspend() {
 		org.freedesktop.UPower.Suspend
 }
 
-
-help() {
-	command help "$@"
-
-	while [ ${1:0:1} = '-' ]; do
-		case "$1" in
-			--) shift; break ;;
-			-*) shift ;;
-		esac
-	done
-
-	echo
-	echo "CUSTOM COMMANDS:"
-
-	cat "$HOME/.bash_aliases" \
-		| egrep '(^[^_][[:alnum:]-]*\(\))|(^# usage: )' \
-		| sed -e 's/() {//' -e '/^help$/d' -e 's/^# usage: //' \
-		| sort -r \
-		| awk '++c[$1] && (NF > 1 || c[$1] == 1)' \
-		| sort \
-		| if [ $# -gt 0 ]; then
-			grep "^$1" | sed 's/^\([^ ]*\) /\1: \1 /'
-		else
-			sed -e 's/^/ /'
-		fi
-}
 
 # usage: sbt-main MAIN_CLASS
 # Run sbt with MAIN_CLASS set as the default main class.
