@@ -10,8 +10,6 @@ PATH="$PATH:$HOME/bin"
 alias "gdb=gdb -q"
 alias "aria2cM=aria2c -x4 -k1M"
 alias 'ls=ls --group-directories-first --color=auto'
-alias epfl-connect='nmcli con up id "EPFL VPN"'
-alias epfl-disconnect='nmcli con down id "EPFL VPN"'
 # Looooooooooooooong alias coming up!
 alias clang_complete_make="make CC='~/.vim/bundle/bin/cc_args.py gcc' CXX='~/.vim/bundle/bin/cc_args.py g++' -B"
 alias wget-gzip="wget --header='accept-encoding: gzip'"
