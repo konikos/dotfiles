@@ -225,6 +225,16 @@ endif
 " }}}
 
 
+" Statusline {{{
+set laststatus=2
+
+set statusline=%<%f\                     " Filename
+set statusline+=%w%h%m%r                 " Options
+set statusline+=%{fugitive#statusline()} " Git Awesomeness
+set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
+" }}}
+
+
 " Autocompletion {{{
 set completeopt=menu,menuone
 " }}}
