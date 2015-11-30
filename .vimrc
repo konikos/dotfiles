@@ -236,6 +236,10 @@ set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
 " }}}
 
 
+" Change current working dir to the current file's dir
+cmap cd. lcd %:p:h
+
+
 " Shortcuts to quickly open files in the directory of the current file {{{
 
 " Expands `%%` to the directory of the current file anywhere in the command
