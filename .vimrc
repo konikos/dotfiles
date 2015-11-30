@@ -113,7 +113,8 @@ set incsearch
 set showmatch
 set hlsearch
 
-noremap <leader><space> :noh<cr>:call clearmatches()<cr>
+" Toggle highlighting
+noremap <leader><space> :set invhlsearch<CR>
 " }}}
 
 
