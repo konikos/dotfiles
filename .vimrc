@@ -236,6 +236,21 @@ set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
 " }}}
 
 
+" Shortcuts to quickly open files in the directory of the current file {{{
+
+" Expands `%%` to the directory of the current file anywhere in the command
+" line
+cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
+
+" Edit in new window
+map <leader>ew :e %%
+" Edit in split
+map <leader>es :sp %%
+" Edit in vsplit
+map <leader>ev :vsp %%
+" }}}
+
+
 " sudo write file
 cmap w!!! w !sudo tee % >/dev/null
 
