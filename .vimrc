@@ -84,7 +84,7 @@ set backupskip=/tmp/*
 
 " Leader {{{
 let mapleader = "\\"
-"let maplocalleader = ","
+let maplocalleader = ","
 " }}}
 
 
