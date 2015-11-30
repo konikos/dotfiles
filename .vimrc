@@ -246,6 +246,11 @@ set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
 cmap cd. lcd %:p:h
 
 
+" Execute '.' once for each line of a visual selection
+" http://stackoverflow.com/a/8064607
+vnoremap . :normal .<CR>
+
+
 " Shortcuts to quickly open files in the directory of the current file {{{
 
 " Expands `%%` to the directory of the current file anywhere in the command
