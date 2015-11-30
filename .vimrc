@@ -5,26 +5,36 @@ runtime! debian.vim
 set nocompatible              " be iMproved
 filetype off                  " required!
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
 
-" let Vundle manage Vundle
-" required! 
-Bundle 'gmarik/vundle'
+" vim-plug and plugins {{{
+call plug#begin('~/.vim/plugged')
 
-Bundle 'ervandew/supertab'
-Bundle 'scrooloose/syntastic'
-Bundle 'kien/ctrlp.vim'
-Bundle 'terryma/vim-multiple-cursors'
-Bundle 'scrooloose/nerdtree'
-Bundle 'sjl/gundo.vim'
-Bundle 'Rip-Rip/clang_complete'
-Bundle 'othree/html5.vim'
-Bundle 'groenewege/vim-less'
-Bundle 'tristen/vim-sparkup'
-Bundle 'derekwyatt/vim-scala'
-Bundle 'pangloss/vim-javascript'
-Bundle 'rking/ag.vim'
+Plug 'ervandew/supertab'
+
+Plug 'scrooloose/syntastic'
+
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+" HTML related plugins {{{
+	" omnicomplete, indent, syntax
+	Plug 'othree/html5.vim'
+
+	" fast elements creation
+	Plug 'rstacruz/sparkup', { 'for': ['html', 'htmldjango'], 'rtp': 'vim/' }
+" }}}
+
+Plug 'pangloss/vim-javascript'
+
+Plug 'derekwyatt/vim-scala'
+
+Plug 'Shirk/vim-gas'
+
+Plug 'tomasr/molokai'
+
+Plug 'tpope/vim-fugitive'
+
+call plug#end()
+" }}}
+
 
 filetype plugin indent on     " required!
 
@@ -33,44 +43,20 @@ runtime! macros/matchit.vim
 let b:match_debug=1 " Required otherwise matchit macros mess up paren matching.
 " }}}
 
+
 " Core VIM options {{{
 set encoding=utf-8
 set modelines=0
 set autoindent
 set showmode
 set showcmd
-"set visualbell
 set backspace=indent,eol,start
 set nonumber
 set relativenumber
-"set laststatus=2
 set history=1000
-"set undofile
-"set undoreload=10000
 set shell=/bin/bash
-"set lazyredraw
-"set splitbelow
 set splitright
-"set fillchars=diff:\ TODO TODO
-"set notimeout TODO
-"set nottimeout TODO
-set hidden " loads a buffer in a window that has an unmodified buffer
-" }}}
-
-
-" Wildmenu completion {{{
-set wildmenu
-set wildmode=list:longest
-
-set wildignore+=.hg,.git,.svn                    " Version control
-set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
-set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
-set wildignore+=*.mp4,*.mkv,*.flv,*.avi,*.mov,*.wmv,*.webm,*.vob
-set wildignore+=*.luac                           " Lua byte code
-set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
-set wildignore+=*.pyc                            " Python byte code
-set wildignore+=*.sw?                            " Vim swap files
-set wildignore+=*.DS_Store?                      " OSX bullshit
+set hidden
 " }}}
 
 
@@ -84,9 +70,6 @@ set shiftwidth=4
 set softtabstop=4
 set noexpandtab
 set wrap
-"set textwidth=85
-"set formatoptions=qrn1 TODO: fo-table
-"set colorcolumn=+1
 " }}}
 
 
@@ -112,10 +95,12 @@ if has("syntax")
 	colorscheme desert
 
 	if &term == "xterm" || &term == "screen-bce" || has("gui_running")
-		set background=light
-		set t_Co=256
-	
-		let g:molokai_original=1
+		if ! has("gui_running")
+			set t_Co=256
+		endif
+
+		set background=dark
+		let g:rehash256 = 1
 		colorscheme molokai
 		set cursorline
 	endif
@@ -123,11 +108,7 @@ endi
 " }}}
 
 
-" Search options {{{
-" Sane regexes
-" nnoremap / /\v TODO
-" vnoremap / /\v TODO
-
+" Search {{{
 set incsearch
 set showmatch
 set hlsearch
@@ -136,14 +117,27 @@ noremap <leader><space> :noh<cr>:call clearmatches()<cr>
 " }}}
 
 
-"set scrolloff=3 TODO
-"set sidescroll=1 TODO
-"set sidescrolloff=10 TODO
+" Wildmenu completion {{{
+set wildmenu
+set wildmode=list:longest,full
 
-"set virtualedit+=block TODO
+set wildignore+=.hg,.git,.svn                    " Version control
+set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
+set wildignore+=*.mp4,*.mkv,*.flv,*.avi,*.mov,*.wmv,*.webm,*.vob
+set wildignore+=*.luac                           " Lua byte code
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
+set wildignore+=*.pyc                            " Python byte code
+set wildignore+=*.sw?                            " Vim swap files
+set wildignore+=*.DS_Store?                      " OSX bullshit
+" }}}
 
-" Make D behave
+
+" Make D and Y behave by working to the end of the line {{{
 nnoremap D d$
+nnoremap Y y$
+" }}}
+
 
 " Don't move on *
 nnoremap * *<c-o>
@@ -163,8 +157,88 @@ noremap k gk
 
 " jump to the last position when reopening a file
 if has("autocmd")
-  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
+" }}}
+
+
+" (Try to) capture F1 key strokes
+inoremap <F1> <ESC>
+
+
+" Remove space characters from the end of the lines
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+
+
+" Copy/paste from the system clipboard
+nnoremap <leader>p "+p
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+
+
+" Moving between buffers {{{
+nnoremap <leader><leader> :bn!<CR>
+nnoremap <leader><BS> :bp!<CR>
+nnoremap <leader>l :ls<CR>
+" }}}
+
+
+" Window shortcuts {{{
+nnoremap <leader>ww <C-w>v<C-w>l
+nnoremap <leader>wm <C-w>_
+nnoremap <leader>w+ <C-w>|
+nnoremap <leader>w= <C-w>=
+nnoremap <leader>] <C-w>w
+nnoremap <leader>[ <C-w>W
+nnoremap <leader>} <C-w>x<C-w>w
+nnoremap <leader>{ <C-w>W<C-w>x
+nnoremap <leader>w} <C-w>L
+nnoremap <leader>w{ <C-w>H
+" }}}
+
+
+" Replace under cursor {{{
+nnoremap <leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
+" Prefilled replace-with text
+nnoremap <leader>S :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
+" }}}
+
+
+" Make shortcuts {{{
+nnoremap <leader>ff :make<cr>
+nnoremap <leader>fc :make clean<cr>
+" }}}
+
+
+" GUI specific settings {{{
+if has("gui_running")
+	" No menubar
+	set guioptions-=T
+	" No lame tearoff menus
+	set guioptions-=t
+
+	set columns=105
+	set lines=55
+
+	set guifont=Monospace\ 10
+endif
+" }}}
+
+
+" Autocompletion {{{
+set completeopt=menu,menuone
+" }}}
+
+
+" SuperTab {{{
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabLongestHighlight = 1
+" }}}
+
+
+" NERDTree {{{
+nnoremap <leader>t :NERDTree<CR>
+let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$', '^__pycache__$']
 " }}}
 
 
@@ -234,88 +308,3 @@ if has("autocmd")
 
 endif
 " }}}
-
-
-" Autocompletion {{{
-set completeopt=menu,menuone,longest
-" }}}
-
-" SuperTab {{{
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabLongestHighlight = 1
-" }}}
-
-" clang_complete {{{
-let g:clang_complete_auto = 0
-let g:clang_library_path = "/usr/lib/llvm-3.5/lib/"
-" }}}
-
-
-" NERDTree shortcuts {{{
-nnoremap <leader>t :NERDTree<CR>
-let NERDTreeIgnore = ['\.pyc$', '\.o$']
-" }}}
-
-" ctrlp.vim {{{
-let g:ctrlp_cmd = 'CtrlPBuffer'
-" }}}
-
-
-inoremap <F1> <ESC>
-" Remove space characters from the end of the lines
-nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
-
-" Copy/paste from the system clipboard
-nnoremap <leader>p "+p
-nnoremap <leader>y "+y
-vnoremap <leader>y "+y
-
-
-"nnoremap <leader>v V`] TODO
-
-"Moving between buffers
-nnoremap <leader><leader> :bn!<CR>
-nnoremap <leader><BS> :bp!<CR>
-nnoremap <leader>l :ls<CR>
-
-" Window shortcuts {{{
-nnoremap <leader>ww <C-w>v<C-w>l
-nnoremap <leader>wm <C-w>_
-nnoremap <leader>w+ <C-w>|
-nnoremap <leader>w= <C-w>=
-nnoremap <leader>] <C-w>w
-nnoremap <leader>[ <C-w>W
-nnoremap <leader>} <C-w>x<C-w>w
-nnoremap <leader>{ <C-w>W<C-w>x
-nnoremap <leader>w} <C-w>L
-nnoremap <leader>w{ <C-w>H
-" }}}
-
-
-" awesome replace word under cursor
-nnoremap <leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
-nnoremap <leader>S :%s/\<<C-r><C-w>\>/<C-r><C-w>/g<Left><Left>
-
-
-"" TeX
-"nnoremap <leader>tt :call textex#echoWordsCount()<cr>
-"vnoremap <leader>tt :call textex#echoWordsCount()<cr>
-
-nnoremap <leader>ff :make<cr>
-nnoremap <leader>fc :make clean<cr>
-
-
-" GUI specific settings {{{
-if has("gui_running")
-	" No menubar
-	set guioptions-=T
-	" No lame tearoff menus
-	set guioptions-=t
-
-	set columns=105
-	set lines=55
-
-	set guifont=Monospace\ 10
-endif
-" }}}
-

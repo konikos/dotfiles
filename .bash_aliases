@@ -10,11 +10,9 @@ PATH="$PATH:$HOME/bin"
 alias "gdb=gdb -q"
 alias "aria2cM=aria2c -x4 -k1M"
 alias 'ls=ls --group-directories-first --color=auto'
-# Looooooooooooooong alias coming up!
-alias clang_complete_make="make CC='~/.vim/bundle/bin/cc_args.py gcc' CXX='~/.vim/bundle/bin/cc_args.py g++' -B"
 alias wget-gzip="wget --header='accept-encoding: gzip'"
 alias xclip="xclip -selection c"
-alias vim-update="vim +BundleInstall +BundleUpdate +qall"
+alias vim-update="vim +PlugInstall +PlugUpdate +qall"
 
 alias ':h=:help'
 
