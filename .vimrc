@@ -156,7 +156,7 @@ nnoremap g, g,zz
 noremap j gj
 noremap k gk
 
-" jump to the last position when reopening a file
+" Jump to the last position when reopening a file
 if has("autocmd")
 	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
@@ -175,6 +175,12 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 nnoremap <leader>p "+p
 nnoremap <leader>y "+y
 vnoremap <leader>y "+y
+
+
+" Don't exit Visual Mode on shifting {{{
+vnoremap < <gv
+vnoremap > >gv
+" }}}
 
 
 " Moving between buffers {{{
