@@ -235,6 +235,10 @@ set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
 " }}}
 
 
+" sudo write file
+cmap w!!! w !sudo tee % >/dev/null
+
+
 " Autocompletion {{{
 set completeopt=menu,menuone
 " }}}
