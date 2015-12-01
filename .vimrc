@@ -32,6 +32,10 @@ Plug 'tomasr/molokai'
 
 Plug 'tpope/vim-fugitive'
 
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+Plug 'junegunn/fzf.vim'
+
 call plug#end()
 " }}}
 
@@ -290,6 +294,49 @@ let g:SuperTabLongestHighlight = 1
 " NERDTree {{{
 nnoremap <leader>t :NERDTree<CR>
 let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$', '^__pycache__$']
+" }}}
+
+
+" fzf {{{
+" Setup the fzf default source command (find) to ignore some files.
+let s:fzf_ignore_files = [
+		\ '*.swp', '*.swo', '*~',
+		\ '*.pyc', '*.pyd', '.coverage' ]
+
+let s:fzf_ignore_dirs = [
+		\ '*/.cache',
+		\ '*/.git', '*/.hg', '*/.svn', '*/CVS', '*/.bzr',
+		\ '*/__pycache__', '*/site-packages', '*/*egg-info', '*/.tox',
+		\ '*/tmp/venv' ]
+
+let $FZF_DEFAULT_COMMAND =
+		\ 'find'
+		\ . ' \( -path ' . join(s:fzf_ignore_dirs, ' -o -path ')  . ' \) -prune -o'
+		\ . ' \( -iname ' . join(s:fzf_ignore_files, ' -o -iname ')  . ' \) -prune -o'
+		\ . ' -type f -print'
+
+nnoremap <silent> <C-P> :Buffers<CR>
+nnoremap <silent> <leader>ee :Files<CR>
+nnoremap <silent> <leader>ag :execute 'Ag ' . input('Ag/')<CR>
+
+function! SearchWordWithAg()
+	execute 'Ag' expand('<cword>')
+endfunction
+
+function! SearchVisualSelectionWithAg() range
+	let old_reg = getreg('"')
+	let old_regtype = getregtype('"')
+	let old_clipboard = &clipboard
+	set clipboard&
+	normal! ""gvy
+	let selection = getreg('"')
+	call setreg('"', old_reg, old_regtype)
+	let &clipboard = old_clipboard
+	execute 'Ag' selection
+endfunction
+
+nnoremap <silent> K :call SearchWordWithAg()<CR>
+vnoremap <silent> K :call SearchVisualSelectionWithAg()<CR>
 " }}}
 
 
