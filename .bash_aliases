@@ -15,6 +15,8 @@ alias xclip="xclip -selection c"
 alias vim-update="vim +PlugInstall +PlugUpdate +qall"
 
 alias ':h=:help'
+alias ':reload=. ~/.bash_aliases'
+alias ':r=:reload'
 
 
 # Prints help for functions which are defined in ~/.bash_aliases
@@ -287,6 +289,30 @@ wget-mirror() {
 		--mirror --convert-links --adjust-extension \
 		--page-requisites --no-parent --continue \
 		"$@"
+}
+
+
+# usage: py-mkpkg PACKAGE_NAME
+# Creates the dir structure and the required __init__.py files for a python
+# package
+py-mkpkg() {
+	local pkg="$1"
+	local pkg_parts
+
+	IFS='.' read -a pkg_parts <<<"$pkg"
+	for part in "${pkg_parts[@]}"; do
+		if ! grep -q '^[_A-Za-z][_A-Za-z0-9]*$' <<<"$part"; then
+			echo "Error: Not a valid identifier: \`$part'"
+			return 1
+		fi
+	done
+
+	local pkg_path="."
+	for part in "${pkg_parts[@]}"; do
+		pkg_path="$pkg_path/$part"
+		mkdir -p "$pkg_path"
+		touch "$pkg_path/__init__.py"
+	done
 }
 
 if [ -f ~/.bash_local ]; then
