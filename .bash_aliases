@@ -235,7 +235,7 @@ mailme() {
 	if [[ -f ~/.mailgunkey ]]; then
 		local KEY=$(cat ~/.mailgunkey)
 		local DOMAIN='notifications.konikos.com'
-		local FROM="me@${DOMAIN}"
+		local FROM="${USER}@$(hostname -s) <me@${DOMAIN}>"
 
 		curl -s -k --user "api:$KEY" \
 			"https://api.mailgun.net/v2/${DOMAIN}/messages" \
