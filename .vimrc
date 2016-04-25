@@ -36,6 +36,8 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 Plug 'junegunn/fzf.vim'
 
+Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
+
 call plug#end()
 " }}}
 
