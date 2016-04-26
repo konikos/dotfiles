@@ -32,9 +32,12 @@ Plug 'tomasr/molokai'
 
 Plug 'tpope/vim-fugitive'
 
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-
-Plug 'junegunn/fzf.vim'
+if has('win32') || isdirectory('C:\Windows') || isdirectory('/c/Windows') || isdirectory('/cygdrive/c/Windows')
+	Plug 'ctrlpvim/ctrlp.vim'
+else
+	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+	Plug 'junegunn/fzf.vim'
+endif
 
 Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
 
