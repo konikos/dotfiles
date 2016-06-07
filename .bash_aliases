@@ -193,12 +193,22 @@ http-serve() {
 
 # usage: gpg-edit FILE
 gpg-edit() {
-	local ENCRYPTED="$1"
+	local recipient_key="4018F537"
+	local input_file="$1"
 
 	exec 3<<<""
-	gpg --decrypt <"$ENCRYPTED" >/dev/fd/3
-	vim /dev/fd/3
-	gpg --encrypt --recipient 4018F537 <&3 >"$ENCRYPTED"
+
+	if [[ -f "$input_file" ]]; then
+		if ! gpg --decrypt <"$input_file" >/dev/fd/3; then
+			echo 'gpg-edit aborted' >&2
+			return 1
+		fi
+	fi
+
+	if ! ${EDITOR=vim} /dev/fd/3; then
+		return 1
+	fi
+	gpg --encrypt --recipient "$recipient_key" <&3 >"$input_file"
 	exec 3>&-
 }
 
