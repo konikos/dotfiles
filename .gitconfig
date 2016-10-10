@@ -8,8 +8,14 @@
 [alias]
 	graph-log = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
 	log-short = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d %Cblue%an <%ae> %Cgreen(%cr)%Creset%n %s%n %b'
-	dc = diff --cached
 	x-update-committer-dates = "filter-branch --env-filter 'GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE; export GIT_COMMITTER_DATE'"
+
+	d = diff
+	dc = diff --cached
+	a = add
+	p = push
+	c = commit
+	s = status
 
 [merge]
 	tool = vimdiff

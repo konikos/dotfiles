@@ -19,6 +19,9 @@ alias ':reload=. ~/.bash_aliases'
 alias ':r=:reload'
 
 
+alias g=git
+
+
 # Prints help for functions which are defined in ~/.bash_aliases
 # usage: :help [FUNCTION]
 :help() {
