@@ -305,18 +305,20 @@ let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$',
 " fzf {{{
 " Setup the fzf default source command (find) to ignore some files.
 let s:fzf_ignore_files = [
-		\ '*.swp', '*.swo', '*~',
-		\ '*.pyc', '*.pyd', '.coverage' ]
+		\ '\*.swp', '\*.swo', '\*~',
+		\ '.gitignore',
+		\ '\*.pyc', '\*.pyd', '.coverage' ]
 
 let s:fzf_ignore_dirs = [
-		\ '*/.cache',
-		\ '*/.git', '*/.hg', '*/.svn', '*/CVS', '*/.bzr',
-		\ '*/__pycache__', '*/site-packages', '*/*egg-info', '*/.tox',
-		\ '*/tmp/venv' ]
+		\ '.cache',
+		\ '.git', '.hg', '.svn', 'CVS', '.bzr',
+		\ '__pycache__', 'site-packages', '\*egg-info', '.tox',
+		\ 'node_modules',
+		\ 'tmp' ]
 
 let $FZF_DEFAULT_COMMAND =
 		\ 'find'
-		\ . ' \( -path ' . join(s:fzf_ignore_dirs, ' -o -path ')  . ' \) -prune -o'
+		\ . ' \( \( -iname ' . join(s:fzf_ignore_dirs, ' -o -iname ')  . ' \) -a -type d \) -prune -o'
 		\ . ' \( -iname ' . join(s:fzf_ignore_files, ' -o -iname ')  . ' \) -prune -o'
 		\ . ' -type f -print'
 
