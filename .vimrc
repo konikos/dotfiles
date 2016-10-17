@@ -103,7 +103,7 @@ if has("syntax")
 
 	colorscheme desert
 
-	if &term == "xterm" || &term == "screen-bce" || has("gui_running")
+	if &term =~ "^xterm" || &term =~ "^screen" || has("gui_running")
 		if ! has("gui_running")
 			set t_Co=256
 		endif
