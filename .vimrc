@@ -122,8 +122,8 @@ set incsearch
 set showmatch
 set hlsearch
 
-" Toggle highlighting
-noremap <leader><space> :set invhlsearch<CR>
+" Toggle search highlighting
+noremap <leader><space> :nohlsearch<CR>
 
 " Display all lines with keyword under cursor and ask to which one to jump
 nmap <leader>/ [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
