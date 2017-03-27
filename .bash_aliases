@@ -216,9 +216,9 @@ gpg-edit() {
 	exec 3>&-
 }
 
-# usage: ssh-tunnel FROM TO MACHINE
+# usage: ssh-tunnel LOCAL_PORT MACHINE MACHINE_PORT
 ssh-tunnel() {
-	ssh -N -L$2:localhost:$1 $3
+	ssh -v -N -L"$1:localhost:$3" "$2"
 }
 
 gnome-suspend() {
