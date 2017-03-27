@@ -15,7 +15,7 @@
 	a = add
 	p = push
 	c = commit
-	s = status
+	s = -c status.short status
 
 [merge]
 	tool = vimdiff
