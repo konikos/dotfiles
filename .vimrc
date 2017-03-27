@@ -14,6 +14,7 @@ Plug 'ervandew/supertab'
 Plug 'scrooloose/syntastic'
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+
 " HTML related plugins {{{
 	" omnicomplete, indent, syntax
 	Plug 'othree/html5.vim'
@@ -22,7 +23,11 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 	Plug 'rstacruz/sparkup', { 'for': ['html', 'htmldjango'], 'rtp': 'vim/' }
 " }}}
 
-Plug 'pangloss/vim-javascript'
+" Javascript related plugins {{{
+	Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
+
+	Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['javascript'] }
+" }}}
 
 Plug 'derekwyatt/vim-scala'
 
@@ -40,6 +45,10 @@ else
 endif
 
 Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
+
+Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss'] }
+
+Plug 'stephpy/vim-yaml', { 'for': ['yaml'] }
 
 call plug#end()
 " }}}
