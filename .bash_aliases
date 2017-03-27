@@ -257,8 +257,11 @@ mailme() {
 			-F to="$TO" \
 			-F subject="$SUBJECT" \
 			-F text='<-'
-	else
+	elif which mail >/dev/null; then
 		mail -s "$SUBJECT" "$TO"
+	else
+		echo "ERROR: mailgunkey is missing and \'mail' is not installed" 1>&2
+		return 1
 	fi
 
 }
