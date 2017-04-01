@@ -323,6 +323,7 @@ let s:fzf_ignore_dirs = [
 		\ '.git', '.hg', '.svn', 'CVS', '.bzr',
 		\ '__pycache__', 'site-packages', '\*egg-info', '.tox',
 		\ 'node_modules',
+		\ 'CMakeFiles',
 		\ 'tmp' ]
 
 let $FZF_DEFAULT_COMMAND =
