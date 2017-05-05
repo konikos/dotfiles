@@ -34,6 +34,7 @@ Plug 'derekwyatt/vim-scala'
 Plug 'Shirk/vim-gas'
 
 Plug 'tomasr/molokai'
+Plug 'reewr/vim-monokai-phoenix'
 
 Plug 'tpope/vim-fugitive'
 
@@ -119,7 +120,8 @@ if has("syntax")
 
 		set background=dark
 		let g:rehash256 = 1
-		colorscheme molokai
+		colorscheme monokai-phoenix
+		highlight Comment cterm=NONE
 		set cursorline
 	endif
 endi
