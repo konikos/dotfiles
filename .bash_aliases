@@ -332,7 +332,89 @@ py-mkpkg() {
 	done
 }
 
+
+# Title changing functionality {{{
+case "$TERM" in
+	xterm*|rxvt*)
+		term_change_title() {
+			echo -ne "\033]0;${1}\007"
+		}
+		;;
+	screen*)
+		term_change_title() {
+			printf '\ek%s\e\\' "$1"
+		}
+		;;
+esac
+
+
+# __short_path PATH
+__short_path() {
+	local path=$1
+
+	if [[ "${#path}" -lt 12 ]]; then
+		echo "$path"
+		return
+	fi
+
+	local components=
+	IFS='/' read -r -a components <<< "$path"
+
+	for ((i=0; i<${#components[@]}; i++)); do
+		local component="${components[$i]}"
+
+		if [[ $i -eq 0 && ${component} = "" ]]; then
+			continue
+		fi
+
+		if [[ $i -ne 0 ]]; then
+			echo -n '/'
+		fi
+
+		if (($i >= ${#components[@]} - 2)); then
+			echo -n "${component}"
+		else
+			echo -n "${component:0:1}"
+		fi
+	done
+
+	echo
+}
+
+
+__change_title_postexec() {
+	local unexpanded_pwd="${PWD}"
+	unexpanded_pwd="${unexpanded_pwd/#${HOME}\/Projects/@}"
+	unexpanded_pwd="${unexpanded_pwd/#${HOME}/\~}"
+	term_change_title "\$ $(__short_path "${unexpanded_pwd}")"
+}
+
+PROMPT_COMMAND="__change_title_postexec; $PROMPT_COMMAND"
+
+
+__change_title_preexec() {
+    if [ -n "$COMP_LINE" ]; then
+		# This happened during during autocompletion
+		return
+	fi
+
+    if [ "$BASH_COMMAND" = "$PROMPT_COMMAND" ]; then
+		return
+	fi
+
+    local exe=$(HISTTIMEFORMAT= history 1 | awk '{ print $2 }')
+	term_change_title "$exe"
+
+	if [[ "$exe" = "fg" ]]; then
+		exe=$(jobs -s | tail -n1 | awk '{ print $3 }') || return
+		term_change_title "$exe"
+	fi
+}
+
+trap '__change_title_preexec "$_"' DEBUG
+# }}}
+
+
 if [ -f ~/.bash_local ]; then
 	. ~/.bash_local
 fi
-
