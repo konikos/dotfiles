@@ -1,5 +1,6 @@
 HISTSIZE=2000
 HISTFILESIZE=25000
+HISTCONTROL=ignoreboth:erasedups
 
 shopt -s histappend
 
