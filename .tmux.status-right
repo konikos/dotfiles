@@ -1,0 +1,11 @@
+#!/bin/bash
+
+{
+	if [ -r /proc/loadavg ]; then
+		cut -d ' ' -f 1 /proc/loadavg
+	else
+		uptime | cut -d ' ' -f 11
+	fi
+} | tr '\n' ' '
+
+hostname

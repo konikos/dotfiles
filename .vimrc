@@ -425,3 +425,10 @@ if has("autocmd")
 
 endif
 " }}}
+
+
+" Enable mouse support {{{
+if has("mouse")
+	set mouse=a
+endif
+" }}}
