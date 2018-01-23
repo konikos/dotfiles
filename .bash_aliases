@@ -275,22 +275,24 @@ sprunge-copy() {
 	sprunge | xclip
 }
 
-# usage: randstr LEN [CHARS='_A-Za-z0-9@#$%^&*()=-']
+# usage: randstr [LEN [CHARS='_A-Za-z0-9@#$%^&*()=-']]
 # Generate a random string of length LEN using
 randstr() {
-	local LEN=$1
-	if [[ $LEN -lt 1 ]]; then
-		echo "usage: randstr LEN [CHARS]" 1>&2
+	local len=$1
+	if [[ -z $len ]]; then
+		len=24
+	elif [[ $len -lt 1 ]]; then
+		echo "usage: randstr [LEN [CHARS]]" 1>&2
 		echo " LEN should be > 0" 1>&2
 		return 1
 	fi
 
-	local CHARS=$2
-	if [[ ! $CHARS ]]; then
-		CHARS='_A-Za-z0-9@#$%^&*()=-'
+	local chars=$2
+	if [[ ! $chars ]]; then
+		chars='_A-Za-z0-9@#$%^&*()=-'
 	fi
 
-	< /dev/urandom tr -dc "$CHARS" | head -c${1:-$LEN}; echo
+	LC_CTYPE=C < /dev/urandom tr -dc "$chars" | head -c"${1:-$len}"; echo
 }
 
 # usage: sumlines <INTEGERS
