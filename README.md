@@ -4,7 +4,7 @@ Yes, this is yet another repo with dotfiles.
 
 Deploy
 ------
-    wget -O - "https://raw.githubusercontent.com/konikos/dotfiles/master/deploy.bash" | bash -
+    wget -O - "https://raw.githubusercontent.com/konikos/dotfiles/master/setup.bash" | bash -
 
 Credits
 -------
