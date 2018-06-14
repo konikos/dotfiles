@@ -11,7 +11,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'ervandew/supertab'
 
-Plug 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic', { 'for': ['sh'] }
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
