@@ -51,6 +51,8 @@ Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss'] }
 
 Plug 'stephpy/vim-yaml', { 'for': ['yaml'] }
 
+Plug 'jceb/vim-orgmode', { 'for': ['org'] }
+
 call plug#end()
 " }}}
 
