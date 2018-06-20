@@ -7,7 +7,12 @@ filetype off                  " required!
 
 
 " vim-plug and plugins {{{
-call plug#begin('~/.vim/plugged')
+
+if has('nvim')
+	call plug#begin('~/.local/share/nvim/plugged')
+else
+	call plug#begin('~/.vim/plugged')
+endif
 
 Plug 'ervandew/supertab'
 
@@ -53,6 +58,14 @@ Plug 'stephpy/vim-yaml', { 'for': ['yaml'] }
 
 Plug 'jceb/vim-orgmode', { 'for': ['org'] }
 
+if has('nvim')
+	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+elseif v:version >= 800
+	Plug 'Shougo/deoplete.nvim'
+	Plug 'roxma/nvim-yarp'
+	Plug 'roxma/vim-hug-neovim-rpc'
+endif
+
 call plug#end()
 " }}}
 
@@ -63,6 +76,17 @@ filetype plugin indent on     " required!
 runtime! macros/matchit.vim
 let b:match_debug=1 " Required otherwise matchit macros mess up paren matching.
 " }}}
+
+
+if has('nvim')
+	if has('macunix')
+		let g:python3_host_prog = '/usr/local/bin/python3'
+	else
+		let g:python3_host_prog = system('which python3')
+	endif
+endif
+
+let g:deoplete#enable_at_startup = 1
 
 
 " Core VIM options {{{
@@ -95,10 +119,17 @@ set wrap
 
 
 " Backups {{{
-set undodir=~/.vim/tmp/undo//     " undo files
-set backupdir=~/.vim/tmp/backup// " backups
-set directory=~/.vim/tmp/swap//   " swap files
-set backup                        " enable backups
+if has('nvim')
+	set undodir=~/.local/share/nvim/tmp/undo/
+	set backupdir=~/.local/share/nvim/tmp/backup/
+	set directory=~/.local/share/nvim/tmp/swap/
+else
+	set undodir=~/.vim/tmp/undo//
+	set backupdir=~/.vim/tmp/backup//
+	set directory=~/.vim/tmp/swap//
+endif
+
+set backup
 set backupskip=/tmp/*
 " }}}
 
@@ -360,7 +391,6 @@ nnoremap <silent> K :call SearchWordWithAg()<CR>
 vnoremap <silent> K :call SearchVisualSelectionWithAg()<CR>
 " }}}
 
-
 " Filetype related stuff {{{
 if has("autocmd")
 	filetype plugin indent on
@@ -427,7 +457,6 @@ if has("autocmd")
 
 endif
 " }}}
-
 
 " Enable mouse support {{{
 if has("mouse")

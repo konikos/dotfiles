@@ -15,6 +15,7 @@ alias 'ls=ls --group-directories-first --color=auto'
 alias wget-gzip="wget --header='accept-encoding: gzip'"
 alias xclip="xclip -selection c"
 alias vim-update="vim +PlugInstall +PlugUpdate +qall"
+alias nvim-update="nvim +PlugInstall +PlugUpdate +UpdateRemotePlugins +qall"
 
 alias ':h=:help'
 alias ':reload=. ~/.bash_aliases'
