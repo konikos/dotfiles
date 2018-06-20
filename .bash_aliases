@@ -306,6 +306,7 @@ sumlines() {
 # Mirror the contents of website under URL
 wget-mirror() {
 	wget \
+		--page-requisites \
 		--user-agent "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0" \
 		--mirror --convert-links --adjust-extension \
 		--page-requisites --no-parent --continue \
