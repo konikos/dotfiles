@@ -12,7 +12,7 @@ DOTFILES_BAK_DIR=$(seq --equal-width 100000 | while read -r suffix; do
 done)
 
 REPO=https://konikos@github.com/konikos/dotfiles.git
-USELESS_FILES=( deploy.bash README.md .gitmodules .git )
+USELESS_FILES=( setup.bash README.md .gitmodules .git )
 
 
 log() {
@@ -31,30 +31,33 @@ backup_if_exists() {
 	mv "$1" "$DOTFILES_BAK_DIR/"
 }
 
-if [[ -e "$DOTFILES_BAK_DIR" ]]; then
-	log ERROR: The backup dir already exists: "\`$DOTFILES_BAK_DIR'"
-	exit 1
-fi
-
-backup_if_exists "$DOTFILES_DIR"
-git clone "$REPO" "$DOTFILES_DIR"
-
-
-(cd "$DOTFILES_DIR" && git submodule update --init --recursive)
-
-find "$DOTFILES_DIR" -maxdepth 1 | while read -r dotfile; do
-	if [[ "$(basename "$dotfile")" = "$(basename "$DOTFILES_DIR")" ]]; then
-		continue
+main() {
+	if [[ -e "$DOTFILES_BAK_DIR" ]]; then
+		log ERROR: The backup dir already exists: "\`$DOTFILES_BAK_DIR'"
+		exit 1
 	fi
 
-	target="${HOME}/$(basename "$dotfile")"
-	backup_if_exists "$target"
-	ln -s "$dotfile" "$target"
-done
+	backup_if_exists "$DOTFILES_DIR"
+	git clone "$REPO" "$DOTFILES_DIR"
 
-for f in "${USELESS_FILES[@]}"; do
-	rm -f "${HOME}/$f"
-done
+	(cd "$DOTFILES_DIR" && git submodule update --init --recursive)
 
-log "Don't forget to run \`vim-update'."
-log "dotfiles deployed, enjoy."
+	find "$DOTFILES_DIR" -maxdepth 1 | while read -r dotfile; do
+		if [[ "$(basename "$dotfile")" = "$(basename "$DOTFILES_DIR")" ]]; then
+			continue
+		fi
+
+		target="${HOME}/$(basename "$dotfile")"
+		backup_if_exists "$target"
+		ln -s "$dotfile" "$target"
+	done
+
+	for f in "${USELESS_FILES[@]}"; do
+		rm -f "${HOME}/$f"
+	done
+
+	log "Don't forget to run \`vim-update'."
+	log "dotfiles deployed, enjoy."
+}
+
+main "$@"
