@@ -67,7 +67,7 @@ main() {
 		rm -f "${HOME}/$f"
 	done
 
-	if ! rmdir "$backup_dir" >/dev/null >&2; then
+	if ! rmdir "$backup_dir" >/dev/null 2>&1; then
 		log "Existing files were backed up to \`${backup_dir}'"
 	fi
 
