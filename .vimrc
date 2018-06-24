@@ -57,6 +57,7 @@ Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss'] }
 Plug 'stephpy/vim-yaml', { 'for': ['yaml'] }
 
 Plug 'jceb/vim-orgmode', { 'for': ['org'] }
+Plug 'tpope/vim-speeddating', { 'for': ['org'] }
 
 if has('nvim')
 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
