@@ -14,8 +14,6 @@ else
 	call plug#begin('~/.vim/plugged')
 endif
 
-Plug 'ervandew/supertab'
-
 Plug 'scrooloose/syntastic', { 'for': ['sh'] }
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -61,10 +59,8 @@ Plug 'tpope/vim-speeddating', { 'for': ['org'] }
 
 if has('nvim')
 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-elseif v:version >= 800
-	Plug 'Shougo/deoplete.nvim'
-	Plug 'roxma/nvim-yarp'
-	Plug 'roxma/vim-hug-neovim-rpc'
+else
+	Plug 'ervandew/supertab'
 endif
 
 call plug#end()
