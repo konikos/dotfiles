@@ -2,61 +2,76 @@
 set -e
 
 
-DOTFILES_DIR="${HOME}/.dotfiles"
-DOTFILES_BAK_DIR=$(seq --equal-width 100000 | while read -r suffix; do
-	dir="$HOME/dotfiles-backup-$(date +"%Y-%m-%d")-${suffix}"
-	if [[ ! -e  "$dir" ]]; then
-		echo "$dir"
-		break
-	fi
-done)
-
-REPO=https://konikos@github.com/konikos/dotfiles.git
-USELESS_FILES=( setup.bash README.md .gitmodules .git )
-
+declare -r REPO=https://konikos@github.com/konikos/dotfiles.git
+declare -r -a USELESS_FILES=( setup.bash README.md .gitmodules .gitignore )
 
 log() {
-	echo - "$@" >&2
+	echo "[+]" "$@" >&2
 }
 
-# backup_if_exists DOTFILE
+die() {
+	log "ERROR:" "$@"
+	exit 1
+}
+
+mkbackup_dir() {
+	local -r template="dotfiles-backup-$(date +"%Y%m%d")-XXXXXXXXXX"
+
+	if [[ $OSTYPE = darwin* ]] || [[ "$(uname -s)" = "Darwin" ]]; then
+		mktemp -d "$template"
+	else
+		mktemp -d -t "$template"
+	fi
+}
+
+# backup_if_exists BACKUP_DIR DOTFILE
 backup_if_exists() {
-	if [[ ! -e "$1" ]]; then
+	local -r backup_dir=$1
+	local -r dotfile=$2
+
+	if [[ ! -e "$dotfile" ]]; then
 		return 0
 	fi
 
-	log Dotfile "\`$1'" already exists, it will be moved to "\`$DOTFILES_BAK_DIR'".
-
-	[[ -e "$DOTFILES_BAK_DIR" ]] || mkdir -p "$DOTFILES_BAK_DIR"
-	mv "$1" "$DOTFILES_BAK_DIR/"
+	mv "$dotfile" "${backup_dir}/"
 }
 
 main() {
-	if [[ -e "$DOTFILES_BAK_DIR" ]]; then
-		log ERROR: The backup dir already exists: "\`$DOTFILES_BAK_DIR'"
-		exit 1
+	local backup_dir
+	if ! backup_dir=$(mkbackup_dir); then
+		die "Could not create backup directory"
 	fi
 
-	backup_if_exists "$DOTFILES_DIR"
-	git clone "$REPO" "$DOTFILES_DIR"
+	local -r dotfiles_dir="${HOME}/.dotfiles"
+	backup_if_exists "$backup_dir" "$dotfiles_dir"
+	git clone "$REPO" "$dotfiles_dir"
 
-	(cd "$DOTFILES_DIR" && git submodule update --init --recursive)
+	(cd "$dotfiles_dir" && git submodule update --init --recursive)
 
-	find "$DOTFILES_DIR" -maxdepth 1 | while read -r dotfile; do
-		if [[ "$(basename "$dotfile")" = "$(basename "$DOTFILES_DIR")" ]]; then
-			continue
-		fi
+	local dotfile rel_dir target_dir link_source
+	git -C "$dotfiles_dir" ls-tree --full-tree -r HEAD \
+		| awk '{ print $4 }' \
+		| while read -r dotfile; do
+			rel_dir=$(dirname "$dotfile")
+			target_dir="${HOME}/${rel_dir}"
+			if ! mkdir -p "${target_dir}"; then
+				die "Could not create directory ${target_dir}"
+			fi
 
-		target="${HOME}/$(basename "$dotfile")"
-		backup_if_exists "$target"
-		ln -s "$dotfile" "$target"
+			link_source="${HOME}/${dotfile}"
+			backup_if_exists "$backup_dir" "$link_source"
+			ln -s "${dotfiles_dir}/$dotfile" "$link_source"
 	done
 
 	for f in "${USELESS_FILES[@]}"; do
 		rm -f "${HOME}/$f"
 	done
 
-	log "Don't forget to run \`vim-update'."
+	if ! rmdir "$backup_dir" >/dev/null >&2; then
+		log "Existing files were backed up to \`${backup_dir}'"
+	fi
+
+	log "Don't forget to run \`[nv]im-update'."
 	log "dotfiles deployed, enjoy."
 }
 
