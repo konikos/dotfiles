@@ -164,14 +164,6 @@ v() {
 }
 
 
-# usage: super-compress ARCHIVE_NAME FILE..
-super-compress() {
-	local ARCHIVE="$1"
-	shift
-	7za a -t7z  -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on "$ARCHIVE" "$@"
-}
-
-
 WARP9_PORT=27401
 
 # usage: warp9-send HOST
