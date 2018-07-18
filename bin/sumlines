@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# usage: sumlines <INTEGERS
+# Sums a list of integers
+exec awk '{ sum += $1 } END { print sum }'

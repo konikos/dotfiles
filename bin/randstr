@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# usage: randstr [LEN [CHARS='_A-Za-z0-9@#$%^&*()=-']]
+# Generate a random string of length LEN using
+
+declare len=$1
+if [[ -z $len ]]; then
+	len=24
+elif [[ $len -lt 1 ]]; then
+	echo "usage: randstr [LEN [CHARS]]" 1>&2
+	echo " LEN should be > 0" 1>&2
+	exit 1
+fi
+
+declare chars=$2
+if [[ ! $chars ]]; then
+	chars='_A-Za-z0-9@#$%^&*()=-'
+fi
+
+LC_CTYPE=C < /dev/urandom tr -dc "$chars" | head -c"${1:-$len}"; echo

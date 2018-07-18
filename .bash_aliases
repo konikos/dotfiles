@@ -276,44 +276,6 @@ sprunge-copy() {
 	sprunge | xclip
 }
 
-# usage: randstr [LEN [CHARS='_A-Za-z0-9@#$%^&*()=-']]
-# Generate a random string of length LEN using
-randstr() {
-	local len=$1
-	if [[ -z $len ]]; then
-		len=24
-	elif [[ $len -lt 1 ]]; then
-		echo "usage: randstr [LEN [CHARS]]" 1>&2
-		echo " LEN should be > 0" 1>&2
-		return 1
-	fi
-
-	local chars=$2
-	if [[ ! $chars ]]; then
-		chars='_A-Za-z0-9@#$%^&*()=-'
-	fi
-
-	LC_CTYPE=C < /dev/urandom tr -dc "$chars" | head -c"${1:-$len}"; echo
-}
-
-# usage: sumlines <INTEGERS
-# Sums a list of integers
-sumlines() {
-	awk '{ sum += $1 } END { print sum }'
-}
-
-# usage: wget-mirror URL
-# Mirror the contents of website under URL
-wget-mirror() {
-	wget \
-		--page-requisites \
-		--user-agent "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0" \
-		--mirror --convert-links --adjust-extension \
-		--page-requisites --no-parent --continue \
-		"$@"
-}
-
-
 # usage: py-mkpkg PACKAGE_NAME
 # Creates the dir structure and the required __init__.py files for a python
 # package
