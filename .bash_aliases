@@ -304,6 +304,10 @@ case "$TERM" in
 			printf '\ek%s\e\\' "$1"
 		}
 		;;
+	*)
+		term_change_title() {
+			:
+		}
 esac
 
 
