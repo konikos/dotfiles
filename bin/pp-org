@@ -1,0 +1,23 @@
+#!/bin/bash
+# Pretty print ORG mode file using ANSI colors
+
+declare -r ANSI_RESET='39;0;0'
+declare -r ANSI_GREEN='38;5;112'
+
+read -r -d '' colorizer <<COLORIZER
+/^*[^*]/ {
+	printf "%c[%sm%s%c[%sm\n", 27, H1_COLOR, \$0, 27, RESET_COLOR
+	next
+}
+
+{
+	printf "%c[%sm%s%c[%sm\n", 27, NORMAL_COLOR, \$0, 27, RESET_COLOR
+}
+COLORIZER
+
+exec awk \
+	-v "H1_COLOR=${ANSI_GREEN}" \
+	-v "NORMAL_COLOR=${ANSI_LIGHT_GRAY}" \
+	-v "RESET_COLOR=${ANSI_RESET}" \
+	"$colorizer" \
+	"$@"
