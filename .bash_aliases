@@ -67,9 +67,7 @@ alias ':h=:help'
 alias ':reload=. ~/.bash_aliases'
 alias ':r=:reload'
 
-
 alias g=git
-
 
 # Prints help for functions which are defined in ~/.bash_aliases
 # usage: :help [FUNCTION]
@@ -91,7 +89,6 @@ alias g=git
 			sed -e 's/^/ /' | $columnize
 		fi
 }
-
 
 # usage: apt-urls PACKAGE..
 apt-urls() {
@@ -287,9 +284,11 @@ mailme() {
 	local SUBJECT="[mailme] $1"
 
 	if [[ -f ~/.mailgunkey ]]; then
+		local hostname
+		hostname=$(hostname -s)
 		local KEY=$(cat ~/.mailgunkey)
 		local DOMAIN='notifications.konikos.com'
-		local FROM="${USER}@$(hostname -s) <me@${DOMAIN}>"
+		local FROM="${USER}@${hostname} <mailme-+${USER}-${hostname}@${DOMAIN}>"
 
 		curl -s -k --user "api:$KEY" \
 			"https://api.mailgun.net/v2/${DOMAIN}/messages" \
