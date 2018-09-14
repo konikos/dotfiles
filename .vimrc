@@ -79,7 +79,7 @@ if has('nvim')
 	if has('macunix')
 		let g:python3_host_prog = '/usr/local/bin/python3'
 	else
-		let g:python3_host_prog = system('which python3')
+		let g:python3_host_prog = $HOME . '/tmp/venv/neovim3/bin/python3'
 	endif
 endif
 
