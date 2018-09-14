@@ -6,7 +6,46 @@ HISTCONTROL=ignoreboth:erasedups
 
 shopt -s histappend
 
-PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+declare -r __col_lgrey='\e[38;5;247m'
+declare -r __col_cyan='\e[38;5;81m'
+declare -r __col_red='\e[38;5;197m'
+declare -r __col_green='\e[38;5;112m'
+declare -r __col_reset='\e[0m'
+
+# helper for PS1 that prints the current virtualenv, if any
+__ps_venv() {
+	if [[ -n $VIRTUAL_ENV ]]; then
+		printf "(%s) " "$(basename "$VIRTUAL_ENV")"
+	fi
+}
+
+# helper for PS1 that prints the current dir's git info, if any
+__ps_git() {
+	local mark local remote behind ahead
+	git for-each-ref --format="%(HEAD) %(refname:short) %(upstream:short)" refs/heads 2>/dev/null | \
+		grep -m1 '^\*' | while read -r mark local remote
+		do
+			printf " %s" "$local"
+			if ! git diff-index --quiet HEAD --; then
+				printf "*"
+			fi
+
+			[[ -z $remote ]] && continue
+			git rev-list --count --left-right "${local}..${remote}" -- | \
+				while read -r behind ahead; do
+					if [[ $behind -ne 0 ]]; then
+						printf " ▾%d" "$behind"
+					fi
+					if [[ $ahead -ne 0 ]]; then
+						printf " ▴%d" "$ahead"
+					fi
+				done
+		done
+}
+
+export VIRTUAL_ENV_DISABLE_PROMPT=yes
+PS1='\n'${__col_cyan}'${debian_chroot:+($debian_chroot)}\w'${__col_reset}''${__col_lgrey}'$(__ps_git)'${__col_reset}'\n$(__ps_venv)'${__col_lgrey}'\$'${__col_reset}' '
+
 export EDITOR=vim
 
 PATH="$PATH:$HOME/bin"
