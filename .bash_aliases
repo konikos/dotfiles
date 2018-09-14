@@ -46,7 +46,12 @@ __ps_git() {
 export VIRTUAL_ENV_DISABLE_PROMPT=yes
 PS1='\n'${__col_cyan}'${debian_chroot:+($debian_chroot)}\w'${__col_reset}''${__col_lgrey}'$(__ps_git)'${__col_reset}'\n$(__ps_venv)'${__col_lgrey}'\$'${__col_reset}' '
 
-export EDITOR=vim
+for EDITOR in nvim vim vi nano pico; do
+	if which "$EDITOR" &>/dev/null; then
+		break
+	fi
+done
+export EDITOR
 
 PATH="$PATH:$HOME/bin"
 
