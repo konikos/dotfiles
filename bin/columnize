@@ -1,0 +1,11 @@
+#!/bin/bash
+# Reorders stdin items into two columns.
+# Fallsback to `cat` if `pr` is not installed
+
+for alt in gpr pr; do
+	if type $alt >/dev/null; then
+		exec "${alt}" --columns=2 --omit-header
+	fi
+done
+
+exec cat
