@@ -1,0 +1,4 @@
+#!/bin/bash
+# Prints the human readable size of stdin
+
+exec wc -c | numfmt --to=iec-i
