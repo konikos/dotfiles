@@ -36,8 +36,8 @@ Plug 'derekwyatt/vim-scala'
 
 Plug 'Shirk/vim-gas'
 
-Plug 'tomasr/molokai'
-Plug 'reewr/vim-monokai-phoenix'
+Plug 'fatih/molokai'
+Plug 'Reewr/vim-monokai-phoenix'
 
 Plug 'tpope/vim-fugitive'
 
