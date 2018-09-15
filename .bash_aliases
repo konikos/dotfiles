@@ -392,8 +392,9 @@ __short_path() {
 
 __change_title_postexec() {
 	local unexpanded_pwd="${PWD}"
-	unexpanded_pwd="${unexpanded_pwd/#${HOME}\/Projects/@}"
+	unexpanded_pwd="${unexpanded_pwd/#${HOME}\/src/@}"
 	unexpanded_pwd="${unexpanded_pwd/#${HOME}/\~}"
+
 	term_change_title "\$ $(__short_path "${unexpanded_pwd}")"
 }
 
