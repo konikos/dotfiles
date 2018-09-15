@@ -368,7 +368,7 @@ let s:fzf_ignore_dirs = [
 		\ '__pycache__', 'site-packages', '\*egg-info', '.tox',
 		\ 'node_modules',
 		\ 'CMakeFiles',
-		\ 'tmp' ]
+		\ 'tmp', '.idea' ]
 
 let $FZF_DEFAULT_COMMAND =
 		\ 'find'
