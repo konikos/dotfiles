@@ -281,29 +281,28 @@ mailme() {
 		return 1
 	fi
 
-	local TO='kokolakisnikos@gmail.com'
-	local SUBJECT="[mailme] $1"
+	local -r to='kokolakisnikos@gmail.com'
+	local -r subject="[mailme] $1"
 
 	if [[ -f ~/.mailgunkey ]]; then
 		local hostname
 		hostname=$(hostname -s)
-		local KEY=$(cat ~/.mailgunkey)
-		local DOMAIN='notifications.konikos.com'
-		local FROM="${USER}@${hostname} <mailme-+${USER}-${hostname}@${DOMAIN}>"
+		local mailgun_key=$(cat ~/.mailgunkey)
+		local domain='notifications.konikos.com'
+		local from="${USER}@${hostname} <mailme-+${USER}-${hostname}@${domain}>"
 
-		curl -s -k --user "api:$KEY" \
-			"https://api.mailgun.net/v2/${DOMAIN}/messages" \
-			-F from="$FROM" \
-			-F to="$TO" \
-			-F subject="$SUBJECT" \
+		curl -s -k --user "api:$mailgun_key" \
+			"https://api.mailgun.net/v2/${domain}/messages" \
+			-F from="$from" \
+			-F to="$to" \
+			-F subject="$subject" \
 			-F text='<-'
 	elif which mail >/dev/null; then
-		mail -s "$SUBJECT" "$TO"
+		mail -s "$subject" "$to"
 	else
-		echo "ERROR: mailgunkey is missing and \'mail' is not installed" 1>&2
+		echo 'ERROR: mailgunkey is missing and "mail" is not installed' 1>&2
 		return 1
 	fi
-
 }
 
 sprunge() {
