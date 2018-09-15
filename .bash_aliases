@@ -32,7 +32,7 @@ __ps_git() {
 			fi
 
 			[[ -z $remote ]] && continue
-			git rev-list --count --left-right "${local}..${remote}" -- | \
+			git rev-list --count --left-right "${remote}..${local}" -- | \
 				while read -r behind ahead; do
 					if [[ $behind -ne 0 ]]; then
 						printf " ▾%d" "$behind"
