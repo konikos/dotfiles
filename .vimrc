@@ -41,13 +41,6 @@ Plug 'Reewr/vim-monokai-phoenix'
 
 Plug 'tpope/vim-fugitive'
 
-if has('win32') || isdirectory('C:\Windows') || isdirectory('/c/Windows') || isdirectory('/cygdrive/c/Windows')
-	Plug 'ctrlpvim/ctrlp.vim'
-else
-	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-	Plug 'junegunn/fzf.vim'
-endif
-
 Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
 
 Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss'] }
@@ -57,15 +50,34 @@ Plug 'stephpy/vim-yaml', { 'for': ['yaml'] }
 Plug 'jceb/vim-orgmode', { 'for': ['org'] }
 Plug 'tpope/vim-speeddating', { 'for': ['org'] }
 
+Plug 'motus/pig.vim', { 'for': ['pig'] }
+
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+if has('win32') || isdirectory('C:\Windows') || isdirectory('/c/Windows') || isdirectory('/cygdrive/c/Windows')
+	Plug 'ctrlpvim/ctrlp.vim'
+else
+	Plug 'autozimu/LanguageClient-neovim', {
+		\ 'branch': 'next',
+		\ 'do': 'bash install.sh',
+		\ }
+
+	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+	Plug 'junegunn/fzf.vim'
+endif
+
 if has('nvim')
 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+elseif v:version >= 800
+	Plug 'Shougo/deoplete.nvim'
+	Plug 'roxma/nvim-yarp'
+	Plug 'roxma/vim-hug-neovim-rpc'
 else
 	Plug 'ervandew/supertab'
 endif
 
 call plug#end()
 " }}}
-
 
 filetype plugin indent on     " required!
 
@@ -77,7 +89,7 @@ let b:match_debug=1 " Required otherwise matchit macros mess up paren matching.
 
 if has('nvim')
 	if has('macunix')
-		let g:python3_host_prog = '/usr/local/bin/python3'
+		let g:python3_host_prog = $HOME . '/tmp/venv/neovim/bin/python3'
 	else
 		let g:python3_host_prog = $HOME . '/tmp/venv/neovim3/bin/python3'
 	endif
@@ -143,7 +155,7 @@ if has("syntax")
 
 	colorscheme desert
 
-	if &term =~ "^xterm" || &term =~ "^screen" || has("gui_running")
+	if &term =~ "^xterm" || &term =~ "^screen" || has("gui_running") || has('nvim')
 		if ! has("gui_running")
 			set t_Co=256
 		endif
@@ -459,4 +471,17 @@ endif
 if has("mouse")
 	set mouse=a
 endif
+" }}}
+
+" LanguageClient-neovim configuration {{{
+let g:LanguageClient_serverCommands = {
+    \ 'go': [$GOBIN . '/go-langserver', '-gocodecompletion'],
+    \ }
+
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <leader>rr :call LanguageClient#textDocument_rename()<CR>
+
 " }}}
