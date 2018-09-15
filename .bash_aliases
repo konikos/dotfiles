@@ -221,7 +221,7 @@ warp9-receive() {
 }
 
 
-# usage: serve-http [DIR [PORT]]
+# usage: http-serve [DIR [PORT]]
 http-serve() {
 	DIR=$(pwd)
 	PORT=8080
