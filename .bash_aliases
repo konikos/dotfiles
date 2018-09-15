@@ -5,6 +5,7 @@ HISTFILESIZE=25000
 HISTCONTROL=ignoreboth:erasedups
 
 shopt -s histappend
+shopt -s extglob
 
 declare -r __col_lgrey='\e[38;5;247m'
 declare -r __col_cyan='\e[38;5;81m'
