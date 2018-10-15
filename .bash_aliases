@@ -69,6 +69,9 @@ alias ':reload=. ~/.bash_aliases'
 alias ':r=:reload'
 
 alias g=git
+alias d=docker
+alias dcl='docker container list'
+alias dck='docker container kill'
 
 # Prints help for functions which are defined in ~/.bash_aliases
 # usage: :help [FUNCTION]
