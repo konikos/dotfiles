@@ -7,11 +7,12 @@ HISTCONTROL=ignoreboth:erasedups
 shopt -s histappend
 shopt -s extglob
 
-declare -r __col_lgrey='\[\e[38;5;247m\]'
-declare -r __col_cyan='\[\e[38;5;81m\]'
-declare -r __col_red='\[\e[38;5;197m\]'
-declare -r __col_green='\[\e[38;5;112m\]'
-declare -r __col_reset='\[\e[m\]'
+declare -r __col_lgrey='\e[38;5;247m'
+declare -r __ps1_col_red='\[\e[38;5;197m\]'
+declare -r __ps1_col_green='\[\e[38;5;112m\]'
+declare -r __ps1_col_lgrey="\[\e$__col_lgrey\]"
+declare -r __ps1_col_cyan='\[\e[38;5;81m\]'
+declare -r __ps1_col_reset='\[\e[m\]'
 
 # helper for PS1 that prints the current virtualenv, if any
 __ps_venv() {
@@ -26,7 +27,7 @@ __ps_git() {
 	git for-each-ref --format="%(HEAD) %(refname:short) %(upstream:short)" refs/heads 2>/dev/null | \
 		grep -m1 '^\*' | while read -r mark local remote
 		do
-			printf " %s" "$local"
+			printf "%s" "$local"
 			if ! git diff-index --quiet HEAD --; then
 				printf "*"
 			fi
@@ -44,8 +45,25 @@ __ps_git() {
 		done
 }
 
+__ps_time() {
+	# shellcheck disable=SC2183
+	printf '%(%H:%M)T'
+}
+
+__ps_widgets_array=( \
+	__ps_time \
+	__ps_git \
+)
+
+__ps_widgets_show() {
+	for w in "${__ps_widgets_array[@]}"; do
+		printf " "
+		$w
+	done
+}
+
 export VIRTUAL_ENV_DISABLE_PROMPT=yes
-PS1="\n${__col_cyan}\${debian_chroot:+(\$debian_chroot)}\w${__col_reset}${__col_lgrey}\$(__ps_git)${__col_reset}\n\$(__ps_venv)${__col_lgrey}\$${__col_reset} "
+PS1="\\n${__ps1_col_cyan}\${debian_chroot:+(\$debian_chroot)}\\w${__ps1_col_reset}${__ps1_col_lgrey}\$(__ps_widgets_show)${__ps1_col_reset}\n\$(__ps_venv)${__ps1_col_lgrey}\$${__ps1_col_reset} "
 
 for EDITOR in nvim vim vi nano pico; do
 	if which "$EDITOR" &>/dev/null; then
