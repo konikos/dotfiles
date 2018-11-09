@@ -55,6 +55,10 @@ __ps_widgets_array=( \
 	__ps_git \
 )
 
+__ps_exit_code() {
+	printf '^%d' "$__EXIT_CODE"
+}
+
 __ps_widgets_show() {
 	for w in "${__ps_widgets_array[@]}"; do
 		printf " "
@@ -62,8 +66,14 @@ __ps_widgets_show() {
 	done
 }
 
+__ps_opt_hostname() {
+	if [[ -n $SSH_CLIENT ]] || [[ -n $SSH_TTY ]]; then
+		printf "%s " "$HOSTNAME"
+	fi
+}
+
 export VIRTUAL_ENV_DISABLE_PROMPT=yes
-PS1="\\n${__ps1_col_cyan}\${debian_chroot:+(\$debian_chroot)}\\w${__ps1_col_reset}${__ps1_col_lgrey}\$(__ps_widgets_show)${__ps1_col_reset}\n\$(__ps_venv)${__ps1_col_lgrey}\$${__ps1_col_reset} "
+PS1="\\n${__ps1_col_cyan}\${debian_chroot:+(\$debian_chroot)}\\w${__ps1_col_reset}${__ps1_col_lgrey}\$(__ps_widgets_show)${__ps1_col_reset}\n\$(__ps_venv)${__ps1_col_lgrey}\$(__ps_opt_hostname)\$${__ps1_col_reset} "
 
 for EDITOR in nvim vim vi nano pico; do
 	if which "$EDITOR" &>/dev/null; then
