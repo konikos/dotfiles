@@ -1,0 +1,35 @@
+#!/bin/bash
+
+window_background="#EE1C1C1C"
+window_border="$window_background"
+window_seperator="$window_background"
+
+normal_background="$window_background"
+normal_foreground="#FFFFFFFF"
+normal_background_alt="$window_background"
+normal_highlight_background="#F0544C"
+normal_highlight_foreground="#FFFFFF"
+
+active_background="$normal_background"
+active_foreground="$normal_foreground"
+active_background_alt="$normal_background_alt"
+active_highlight_background="$normal_highlight_background"
+active_highlight_foreground="$normal_highlight_foreground"
+
+urgent_background="$active_background"
+urgent_foreground="$active_foreground"
+urgent_background_alt="$active_background_alt"
+urgent_highlight_background="$active_highlight_background"
+urgent_highlight_foreground="$active_highlight_foreground"
+
+
+exec rofi \
+	-color-window "$window_background, $window_border, $window_seperator" \
+	-color-normal \
+		"$normal_background, $normal_foreground, $normal_background_alt, $normal_highlight_background, $normal_highlight_foreground" \
+	-color-active \
+		"$active_background, $active_foreground, $active_background_alt, $active_highlight_background, $active_highlight_foreground" \
+	-color-urgent \
+		"$urgent_background, $urgent_foreground, $urgent_background_alt, $urgent_highlight_background, $urgent_highlight_foreground" \
+	-padding 400  -width 100 -height 100 -opacity 100 \
+	-modi "drun,notes:~/bin/rofi/notes.py" -show drun -lines 9 -line-margin 0
