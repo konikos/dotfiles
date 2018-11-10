@@ -10,7 +10,7 @@ shopt -s extglob
 declare -r __col_lgrey='\e[38;5;247m'
 declare -r __ps1_col_red='\[\e[38;5;197m\]'
 declare -r __ps1_col_green='\[\e[38;5;112m\]'
-declare -r __ps1_col_lgrey="\[\e$__col_lgrey\]"
+declare -r __ps1_col_lgrey="\[$__col_lgrey\]"
 declare -r __ps1_col_cyan='\[\e[38;5;81m\]'
 declare -r __ps1_col_reset='\[\e[m\]'
 
