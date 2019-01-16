@@ -464,6 +464,11 @@ if has("autocmd")
 		au FileType javascript setlocal tabstop=4 softtabstop=4 shiftwidth=4 expandtab
 	augroup END
 
+	augroup ft_bash
+		au!
+		au BufRead,BufNewFile .bash_* let b:is_bash=1
+		au BufRead,BufNewFile .bash_* set filetype=sh
+	augroup END
 endif
 " }}}
 
