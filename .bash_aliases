@@ -110,11 +110,11 @@ alias agi='ag --ignore-case'
 		columnize=cat
 	fi
 
-	cat "$HOME/.bash_aliases" \
+	cat "$HOME/.bash_aliases" "$HOME/.bash_local" \
 		| egrep '(^[^_][[:alnum:]-]*\(\))|(^# usage: )' \
 		| sed -e 's/() {//' -e 's/^# usage: //I' \
 		| sort -r \
-		| awk '++c[$1] && (NF > 1 || c[$1] == 1)' \
+		| awk '!/^_/ && ++c[$1] && (NF > 1 || c[$1] == 1)' \
 		| sort \
 		| if [[ $# -gt 0 ]]; then
 			grep "^$1" | sed 's/^\([^ ]*\) /\1: \1 /'
