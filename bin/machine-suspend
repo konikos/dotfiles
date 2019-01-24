@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if type systemctl &>/dev/null; then
+	exec systemctl suspend
+elif [[ $XDG_CURRENT_DESKTOP = XFCE ]]; then
+	exec xfce4-session-logout --suspend
+else
+	exit 1
+fi

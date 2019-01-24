@@ -291,14 +291,6 @@ ssh-tunnel() {
 	ssh -v -N -L"$1:localhost:$3" "$2"
 }
 
-gnome-suspend() {
-	dbus-send --system --print-reply \
-		--dest="org.freedesktop.UPower" \
-		/org/freedesktop/UPower \
-		org.freedesktop.UPower.Suspend
-}
-
-
 # usage: sbt-main MAIN_CLASS
 # Run sbt with MAIN_CLASS set as the default main class.
 sbt-main() {
