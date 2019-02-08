@@ -5,7 +5,7 @@ import sys
 import subprocess
 
 
-DROPBOX_NOTES='/home/konikos/Dropbox/Documents/Notes'
+DROPBOX_NOTES=os.path.join(os.path.expanduser('~'), 'Dropbox/Documents/Org')
 
 
 if len(sys.argv) > 1:
