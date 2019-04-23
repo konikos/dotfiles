@@ -451,3 +451,31 @@ trap '__change_title_preexec "$_"' DEBUG
 if [ -f ~/.bash_local ]; then
 	. ~/.bash_local
 fi
+
+# usage: _1
+# Prints the first field in a space-delimited line
+_1() {
+	awk '{ print $1 }'
+}
+
+# usage: _2
+# Prints the second field in a space-delimited line
+_2() {
+	awk '{ print $2 }'
+}
+
+# usage: _3
+# Prints the third field in a space-delimited line
+_3() {
+	awk '{ print $3 }'
+}
+
+# usage: _n N
+# Prints the N-th field in a space-delimited line
+_n() {
+	if ! [[ $1 =~ ^[0-9]+$ ]]; then
+		echo "${FUNCNAME[0]}: provided column is not number: $1" >&2
+		return 1
+	fi
+	awk -v "col=${1}" '{ print $col }'
+}
