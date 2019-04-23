@@ -24,10 +24,10 @@ __ps_venv() {
 # helper for PS1 that prints the current dir's git info, if any
 __ps_git() {
 	local mark local remote behind ahead
-	git for-each-ref --format="%(HEAD) %(refname:short) %(upstream:short)" refs/heads 2>/dev/null | \
-		grep -m1 '^\*' | while read -r mark local remote
+	git for-each-ref --format="%(HEAD) %(refname:short) %(upstream:short) %(objectname:short)" refs/heads 2>/dev/null | \
+		grep -m1 '^\*' | while IFS=' ' read -r mark local remote sha1
 		do
-			printf "%s" "$local"
+			printf "%s (%s)" "$sha1" "$local"
 			if ! git diff-index --quiet HEAD --; then
 				printf "*"
 			fi
