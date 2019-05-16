@@ -76,6 +76,8 @@ else
 	Plug 'ervandew/supertab'
 endif
 
+Plug 'udalov/kotlin-vim'
+
 call plug#end()
 " }}}
 
