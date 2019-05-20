@@ -89,6 +89,8 @@ alias "aria2cM=aria2c -x4 -k1M"
 alias 'ls=ls --group-directories-first --color=auto'
 alias wget-gzip="wget --header='accept-encoding: gzip'"
 alias xclip="xclip -selection c"
+alias xc="xclip -selection c"
+alias xp="xclip -selection c -out"
 alias vim-update="vim +PlugInstall +PlugUpdate +qall"
 alias nvim-update="nvim +PlugInstall +PlugUpdate +UpdateRemotePlugins +qall"
 
