@@ -287,6 +287,18 @@ nnoremap <leader>fc :make clean<cr>
 " }}}
 
 
+" Move lines up or down {{{
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
+
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+" }}}
+
+
 " GUI specific settings {{{
 if has("gui_running")
 	" No menubar
@@ -335,6 +347,10 @@ map <leader>es :sp %%
 map <leader>ev :vsp %%
 " }}}
 
+" Quickfix Navigation {{{
+nnoremap <leader>cc :cc<CR>
+nnoremap <leader>cw :cw<CR>
+" }}}
 
 " sudo write file
 cmap w!!! w !sudo tee % >/dev/null
