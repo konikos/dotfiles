@@ -78,6 +78,8 @@ endif
 
 Plug 'udalov/kotlin-vim'
 
+Plug 'jiangmiao/auto-pairs'
+
 call plug#end()
 " }}}
 
