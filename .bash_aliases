@@ -84,6 +84,12 @@ export EDITOR
 
 PATH="$PATH:$HOME/bin"
 
+__fzf-git-widget() {
+	FZF_CTRL_T_COMMAND="command git status --porcelain | cut -c 4-" fzf-file-widget
+}
+
+bind -x '"\C-g": "__fzf-git-widget"'
+
 alias "gdb=gdb -q"
 alias "aria2cM=aria2c -x4 -k1M"
 alias 'ls=ls --group-directories-first --color=auto'
