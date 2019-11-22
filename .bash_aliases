@@ -168,27 +168,6 @@ pdf-title-fix() {
 	done
 }
 
-# usage: mobi2epub [EPUB..]
-mobi2epub() {
-	ls -1 "$@" | while read mobi; do
-		EPUB="${mobi%.*}.epub"
-		ebook-convert "$mobi" "$EPUB" --output-profile nook
-	done
-}
-
-# usage: svg2ico SVG
-svg2ico() {
-	echo "Not finished"
-	return
-	SRC="$1"
-	SRC_BASE="$(basename "$SRC")"
-	DEST="$(dirname "$SRC")"/"${SRCBASE%.*}_%.3d.png"
-
-	for d in 256 128 48 32 16; do
-		rsvg-convert -w $d -h $d "$SRC" >ipod_$(printf "%.3d" $d).png;
-	done
-}
-
 # usage: finddup [DIR..]
 # Find duplicate files, based on size first, then MD5 hash
 finddup() {
