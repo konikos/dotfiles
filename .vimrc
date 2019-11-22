@@ -499,9 +499,19 @@ endif
 " }}}
 
 " LanguageClient-neovim configuration {{{
-let g:LanguageClient_serverCommands = {
-    \ 'go': [$GOBIN . '/go-langserver', '-gocodecompletion'],
-    \ }
+let g:LanguageClient_serverCommands = {}
+
+" Configure LanguageClient for Go
+if executable($GOBIN . '/gopls')
+	let g:LanguageClient_serverCommands['go'] = [$GOBIN . '/gopls']
+endif
+
+for path in ['./tmp/venv/bin/pyls', 'pyls']
+	if executable(path)
+		let g:LanguageClient_serverCommands['python'] = [path]
+		break
+	endif
+endfor
 
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 
