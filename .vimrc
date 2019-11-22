@@ -273,6 +273,10 @@ nnoremap <leader>} <C-w>x<C-w>w
 nnoremap <leader>{ <C-w>W<C-w>x
 nnoremap <leader>w} <C-w>L
 nnoremap <leader>w{ <C-w>H
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 " }}}
 
 
