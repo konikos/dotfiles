@@ -90,25 +90,25 @@ __fzf-git-widget() {
 
 bind -x '"\C-g": "__fzf-git-widget"'
 
-alias "gdb=gdb -q"
-alias "aria2cM=aria2c -x4 -k1M"
-alias 'ls=ls --group-directories-first --color=auto'
-alias wget-gzip="wget --header='accept-encoding: gzip'"
-alias xclip="xclip -selection c"
-alias xc="xclip -selection c"
-alias xp="xclip -selection c -out"
-alias vim-update="vim +PlugInstall +PlugUpdate +qall"
-alias nvim-update="nvim +PlugInstall +PlugUpdate +UpdateRemotePlugins +qall"
-
-alias ':h=:help'
-alias ':reload=. ~/.bash_aliases'
-alias ':r=:reload'
-
+alias gdb='gdb -q'
+alias aria2cM='aria2c -x4 -k1M'
+alias ls='ls --group-directories-first --color=auto'
+alias wget-gzip='wget --header="accept-encoding: gzip"'
+alias xclip='xclip -selection c'
+alias xc='xclip -selection c'
+alias xp='xclip -selection c -out'
+alias vim-update='vim +PlugInstall +PlugUpdate +qall'
+alias nvim-update='nvim +PlugInstall +PlugUpdate +UpdateRemotePlugins +qall'
 alias g=git
+alias ggl='git graph-log -n10'
 alias d=docker
 alias dcl='docker container list'
 alias dck='docker container kill'
 alias agi='ag --ignore-case'
+
+alias ':h=:help'
+alias ':reload=. ~/.bash_aliases'
+alias ':r=:reload'
 
 # Prints help for functions which are defined in ~/.bash_aliases
 # usage: :help [FUNCTION]
