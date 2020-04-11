@@ -105,6 +105,7 @@ alias d=docker
 alias dcl='docker container list'
 alias dck='docker container kill'
 alias agi='ag --ignore-case'
+alias ssh-key-only='ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no'
 
 alias ':h=:help'
 alias ':reload=. ~/.bash_aliases'
