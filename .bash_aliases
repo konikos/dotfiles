@@ -241,16 +241,26 @@ warp9-receive() {
 }
 
 
-# usage: http-serve [DIR [PORT]]
+# usage: http-serve [DIR [HOST] [PORT]]
 http-serve() {
 	DIR=$(pwd)
+	HOST=127.0.0.1
 	PORT=8080
 	[ -z "$1" ] || DIR="$1"
+	shift
+	[ -z "$1" ] || HOST="$1"
 	shift
 	[ -z "$1" ] || PORT="$1"
 	shift
 
-	(cd "$DIR" && python -m SimpleHTTPServer "$PORT")
+	if [[ $HOST = "0.0.0.0" ]] && type python2 >/dev/null 2>&1; then
+		(cd "$DIR" && python -m SimpleHTTPServer "$PORT")
+	elif type python3 >/dev/null 2>&1; then
+		python3 -m http.server "$PORT" --bind "$HOST"
+	else
+		echo "ERROR: Could not find python2 or python3" >&2
+		return 1
+	fi
 }
 
 # usage: gpg-edit FILE
