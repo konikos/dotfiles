@@ -73,7 +73,7 @@ __ps_opt_hostname() {
 }
 
 export VIRTUAL_ENV_DISABLE_PROMPT=yes
-PS1="\\n${__ps1_col_cyan}\${debian_chroot:+(\$debian_chroot)}\\w${__ps1_col_reset}${__ps1_col_lgrey}\$(__ps_widgets_show)${__ps1_col_reset}\n\$(__ps_venv)${__ps1_col_lgrey}\$(__ps_opt_hostname)\$${__ps1_col_reset} "
+PS1="\\n${__ps1_col_cyan}\${debian_chroot:+(\$debian_chroot)}\\w${__ps1_col_reset}${__ps1_col_lgrey}\$(__ps_widgets_show)${__ps1_col_reset}\n\$(__ps_venv)${__ps1_col_lgrey}\$(__ps_opt_hostname)\\\$${__ps1_col_reset} "
 
 for EDITOR in nvim vim vi nano pico; do
 	if which "$EDITOR" &>/dev/null; then
