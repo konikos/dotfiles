@@ -477,3 +477,8 @@ _n() {
 	fi
 	awk -v "col=${1}" '{ print $col }'
 }
+
+# usage: ssh-tmux HOST
+ssh-tmux() {
+	ssh -t "$@" tmux new-session -A -s default
+}
