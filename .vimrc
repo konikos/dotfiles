@@ -80,6 +80,9 @@ Plug 'udalov/kotlin-vim'
 
 Plug 'jiangmiao/auto-pairs'
 
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+
 call plug#end()
 " }}}
 
@@ -492,6 +495,19 @@ if has("autocmd")
 		au!
 		au BufRead,BufNewFile .bash_* let b:is_bash=1
 		au BufRead,BufNewFile .bash_* set filetype=sh
+	augroup END
+
+	augroup ft_typescript
+		au!
+		au FileType typescript setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+		au FileType typescript.tsx setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+		au FileType typescript match ErrorMsg '\%>99v.\+'
+		au FileType typescript.tsx match ErrorMsg '\%>99v.\+'
+	augroup END
+
+	augroup ft_css
+		au!
+		au FileType css setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 	augroup END
 endif
 " }}}
