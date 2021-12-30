@@ -482,3 +482,20 @@ _n() {
 ssh-tmux() {
 	ssh -t "$@" tmux new-session -A -s default
 }
+
+# usage: ssh-keygen-auto USER@HOST [arguments to ssh-keygen-auto]...
+ssh-keygen-auto() {
+	if ! [[ $1 =~ ^[^@]+@[^@]+$ ]]; then
+		echo "${FUNCNAME[0]}: First argument should formatted as USER@HOST. @ symbols are not supported in USER or HOST." >&2
+		return 1
+	fi
+
+	local comment=$1
+	local reverse_host=$(cut -d @ -f 2  <<<"$1" | tr . $'\n' | tac | paste -s -d '.')
+	local user=$(cut -d @ -f 1  <<<"$1")
+	local -r basename="${HOME}/.ssh/${reverse_host}_${user}"
+	echo "$reverse_host $user"
+	shift
+
+	ssh-keygen "$@" -f "$basename" -C "$comment"
+}
