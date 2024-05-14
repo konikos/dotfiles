@@ -1,0 +1,55 @@
+#!/bin/bash
+
+log() {
+        echo "$@" >&2
+}
+
+die() {
+        log "error:" "$@"
+        exit 1
+}
+
+pitches=(  )
+tempos=( )
+
+while [[ $# -gt 0 ]] && [[ $1 != '--' ]]; do
+	pitches+=( "$1" )
+	shift
+done
+shift
+
+while [[ $# -gt 0 ]] && [[ $1 != '--' ]]; do
+	tempos+=( "$1" )
+	shift
+done
+shift
+
+if [[ $# -eq 0 ]]; then
+	die "error: usage: $(basename "$0") PITCH.. -- TEMPO.. -- FILE.."
+fi
+
+log "pitches=${pitches[*]}"
+log "tempos=${tempos[*]}"
+
+for src in "$@"; do
+	delete_src=false
+	if [[ "${src##*.}" != "wav" ]]; then
+		src_noext="${src%%.*}"
+		ffmpeg -i "${src}" "${src_noext}.wav"
+		src="${src_noext}.wav"
+		delete_src=true
+	fi
+
+	for p in "${pitches[@]}"; do
+		for t in "${tempos[@]}"; do
+			dest_noext="${src%%.*}-p${p}-T${t}"
+			rubberband -T"${t}" -p"${p}" "$src" "${dest_noext}.wav" \
+				&& ffmpeg -i "${dest_noext}.wav" -c:a libopus -b:a 128K  "${dest_noext}.opus" \
+				&& rm "${dest_noext}.wav"
+		done
+	done
+
+	if $delete_src; then
+		rm "$src"
+	fi
+done
