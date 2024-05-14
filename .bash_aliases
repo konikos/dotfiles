@@ -499,3 +499,21 @@ ssh-keygen-auto() {
 
 	ssh-keygen "$@" -f "$basename" -C "$comment"
 }
+
+gpf() {
+	local current_branch
+	if ! current_branch=$(git rev-parse --abbrev-ref HEAD); then
+		echo "gpf: Could not get current Git branch" >&2
+		return 1
+	fi
+
+	case "$current_branch" in
+		*master*|*main*)
+			echo "${FUNCNAME[0]}: Refusing to force push to ${current_branch}. Not happening." >&2
+			return 1
+			;;
+		*)
+			git push -f
+			;;
+	esac
+}
