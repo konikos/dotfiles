@@ -66,15 +66,7 @@ else
 	Plug 'junegunn/fzf.vim'
 endif
 
-if has('nvim')
-	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-elseif v:version >= 800
-	Plug 'Shougo/deoplete.nvim'
-	Plug 'roxma/nvim-yarp'
-	Plug 'roxma/vim-hug-neovim-rpc'
-else
-	Plug 'ervandew/supertab'
-endif
+Plug 'ervandew/supertab'
 
 Plug 'udalov/kotlin-vim'
 
@@ -92,18 +84,6 @@ filetype plugin indent on     " required!
 runtime! macros/matchit.vim
 let b:match_debug=1 " Required otherwise matchit macros mess up paren matching.
 " }}}
-
-
-if has('nvim')
-	if has('macunix')
-		let g:python3_host_prog = $HOME . '/tmp/venv/neovim/bin/python3'
-	else
-		let g:python3_host_prog = $HOME . '/tmp/venv/neovim3/bin/python3'
-	endif
-endif
-
-let g:deoplete#enable_at_startup = 1
-
 
 " Core VIM options {{{
 set encoding=utf-8
