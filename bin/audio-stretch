@@ -1,12 +1,33 @@
 #!/bin/bash
 
 log() {
-        echo "$@" >&2
+	echo "$(basename "${BASH_SOURCE[0]}"):" "$@" >&2
 }
 
 die() {
-        log "error:" "$@"
-        exit 1
+	log "error:" "$@"
+	exit 1
+}
+
+# usage: download_file_or_die $url $target_dir
+download_file_or_die() {
+	local url="$1"
+	local target_dir="$2"
+	local temp_dir
+	if ! temp_dir=$(mktemp -d); then
+		die "Could not create temp dir for downloading $src"
+	fi
+	log "temp dir for $url is $temp_dir"
+	if ! (set -e && cd "$temp_dir" && yt-dlp -q -v -x "$url" >/dev/null); then
+		die "Could not download $url"
+	fi
+	if ! filename=$(find "$temp_dir" -type f -print0 | xargs -0 basename | head -n1); then
+		die "Could not find downloaded file in $temp_dir"
+	fi
+	if ! mv "${temp_dir}/${filename}" "${target_dir}/"; then
+		die "Could not move ${temp_dir}/${filename} to ${target_dir}"
+	fi
+	echo "$filename"
 }
 
 pitches=(  )
@@ -25,13 +46,32 @@ done
 shift
 
 if [[ $# -eq 0 ]]; then
-	die "error: usage: $(basename "$0") PITCH.. -- TEMPO.. -- FILE.."
+	die "usage: $(basename "$0") PITCH.. -- TEMPO.. -- FILE|URL.."
+fi
+
+if [[ ${#pitches[@]} -eq 0 && ${#tempos[@]} -eq 0 ]]; then
+	die "nothing to be done: no pitches or tempos were provided"
+elif [[ ${#pitches[@]} -eq 0 ]]; then
+	pitches=( 0 )
+elif [[ ${#tempos[@]} -eq 0 ]]; then
+	tempos=( 1 )
 fi
 
 log "pitches=${pitches[*]}"
 log "tempos=${tempos[*]}"
 
+sources=( )
 for src in "$@"; do
+	if [[ $src =~ ^https:// ]]; then
+		log "downloading $src"
+		filename=$(download_file_or_die "$src" "$PWD")
+		sources+=( "$filename" )
+	else
+		sources+=( "$src" )
+	fi
+done
+
+for src in "${sources[@]}"; do
 	delete_src=false
 	if [[ "${src##*.}" != "wav" ]]; then
 		src_noext="${src%%.*}"
@@ -44,7 +84,7 @@ for src in "$@"; do
 		for t in "${tempos[@]}"; do
 			dest_noext="${src%%.*}-p${p}-T${t}"
 			rubberband -T"${t}" -p"${p}" "$src" "${dest_noext}.wav" \
-				&& ffmpeg -i "${dest_noext}.wav" -c:a libopus -b:a 128K  "${dest_noext}.opus" \
+				&& ffmpeg -y -i "${dest_noext}.wav" -c:a libopus -b:a 128K  "${dest_noext}.opus" \
 				&& rm "${dest_noext}.wav"
 		done
 	done
