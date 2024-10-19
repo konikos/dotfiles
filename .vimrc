@@ -162,7 +162,7 @@ if has("syntax")
 
 	colorscheme desert
 
-	if &term =~ "^xterm" || &term =~ "^screen" || has("gui_running") || has('nvim')
+	if &term =~ "^xterm" || &term =~ "^screen" || &term =~ "^tmux" || has("gui_running") || has('nvim')
 		if ! has("gui_running")
 			set t_Co=256
 		endif
