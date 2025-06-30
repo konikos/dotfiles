@@ -83,8 +83,12 @@ for src in "${sources[@]}"; do
 	for p in "${pitches[@]}"; do
 		for t in "${tempos[@]}"; do
 			dest_noext="${src%%.*}-p${p}-T${t}"
+			dest_opus="${dest_noext}.opus"
+			if [[ -e $dest_opus ]]; then
+				continue
+			fi
 			rubberband -T"${t}" -p"${p}" "$src" "${dest_noext}.wav" \
-				&& ffmpeg -y -i "${dest_noext}.wav" -c:a libopus -b:a 128K  "${dest_noext}.opus" \
+				&& ffmpeg -y -i "${dest_noext}.wav" -c:a libopus -b:a 128K "${dest_opus}" \
 				&& rm "${dest_noext}.wav"
 		done
 	done
